@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SFML/System/Vector2.hpp>
+#include "piTypes\Point.hpp"
 
 namespace constants
 {
@@ -23,6 +23,6 @@ namespace constants
 	{
 		constexpr auto ROTATION_MODES = 4;
 		constexpr auto STRAIGHT_ANGLE = 90;
-		const sf::Vector2f CELL_DIMENSIONS = sf::Vector2f{ 64,64 };
+		constexpr pi::CompileTimeDoubleTemplateValuesForExampleCompileTimeDoubleTemplateValuesForExamplefloatDoubleFloatType<float> CELL_DIMENSIONS = { 64,64 };
 	}
 }
