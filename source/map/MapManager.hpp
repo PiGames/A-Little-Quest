@@ -8,22 +8,6 @@ namespace pi
 {
 	class MapManager
 	{
-		/* ===Objects=== */
-	public:
-	protected:
-	private:
-		//Vector of cells which are the surface
-		std::vector<Cell> map;
-
-		//World size in units
-		sf::Vector2i unitWorldSize{ 0,0 };
-
-		//Dimensions of cell(in px)
-		sf::Vector2f cellDimensions{ 0,0 };
-
-		static MapManager* instance;
-
-		/* ===Methods=== */
 	public:
 		static MapManager& getInstance();
 
@@ -38,9 +22,20 @@ namespace pi
 		//Checks that object with given position is in map
 		bool isInMap( unsigned int i, unsigned int j );
 
-	protected:
+		//Adds new cell
+		void addCell( int id, sf::Vector2i unitPosition );
+
 	private:
-		void createWorld( uint8_t defaultStateNumber );
+		//Vector of cells which are the surface
+		std::vector<Cell> map;
+
+		//World size in units
+		sf::Vector2i unitWorldSize{ 0,0 };
+
+		//Dimensions of cell(in px)
+		sf::Vector2f cellDimensions{ 0,0 };
+
+		static MapManager* instance;
 
 		MapManager( sf::Vector2i uWorldSize );
 		MapManager() = delete;  // Not Implemented

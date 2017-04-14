@@ -1,9 +1,21 @@
 #include <iostream>
 
+#include "map\MapManager.hpp"
+#include "map\WorldConstructor.hpp"
+
 int main()
 {
 	std::cout << "Hello World!\n";
-	std::cin.get();
+
+	pi::MapManager::createInstance( sf::Vector2i( 64, 64 ) );
+
+	{
+		pi::WorldConstructor worldConstructor;
+		worldConstructor.createWorld( sf::Vector2i( 5, 5 ), 0 );
+	}
+
+
+
 
 	return 0;
 }
