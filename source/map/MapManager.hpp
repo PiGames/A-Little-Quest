@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Cell.hpp"
+#include "logger/Logger.hpp"
 
 namespace pi
 {

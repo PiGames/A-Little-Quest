@@ -1,6 +1,6 @@
 /*
-Conrad 'Condzi' Kubacki 2017
-https://github.com/condzi
+	Conrad 'Condzi' Kubacki 2017
+	https://github.com/condzi
 */
 
 #pragma once
@@ -11,7 +11,7 @@ namespace pi
 {
 	/*
 	===============================================================================
-	Velocity Component structure.
+		Velocity Component structure.
 
 	===============================================================================
 	*/

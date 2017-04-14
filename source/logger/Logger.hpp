@@ -8,7 +8,7 @@
 
 #include "Config.hpp"
 
-namespace mv
+namespace pi
 {
 	class Logger
 	{

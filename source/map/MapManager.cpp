@@ -10,7 +10,7 @@ namespace pi
 	{
 		if ( instance == nullptr )
 		{
-			//Logger::Log( constants::error::singleton::SINGLETON_NOT_INITED, Logger::STREAM::BOTH, Logger::TYPE::ERROR );
+			Logger::Log( constants::error::singleton::SINGLETON_NOT_INITED, Logger::stream_t::BOTH, Logger::type_t::ERROR );
 		}
 		return *instance;
 	}
@@ -19,7 +19,7 @@ namespace pi
 	{
 		if ( uWorldSize.x <= 0 || uWorldSize.y <= 0 )
 		{
-			//Logger::Log( constants::error::mapManager::NEGATIVE_VALUES, Logger::STREAM::BOTH, Logger::TYPE::ERROR );
+			Logger::Log( constants::error::mapManager::NEGATIVE_VALUES, Logger::stream_t::BOTH, Logger::type_t::ERROR );
 			return;
 		}
 		MapManager::unitWorldSize = uWorldSize;
@@ -31,7 +31,7 @@ namespace pi
 			instance = new MapManager( uWorldSize );
 		else
 		{
-			//Logger::Log( constants::error::singleton::SINGLETON_INITED, Logger::STREAM::CONSOLE, Logger::TYPE::INFO );
+			Logger::Log( constants::error::singleton::SINGLETON_INITED, Logger::stream_t::CONSOLE, Logger::type_t::INFO );
 		}
 	}
 

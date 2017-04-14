@@ -25,4 +25,23 @@ namespace constants
 		constexpr auto STRAIGHT_ANGLE = 90;
 		constexpr pi::coord_t<float> CELL_DIMENSIONS = { 64,64 };
 	}
+
+	namespace error
+	{
+		namespace singleton
+		{
+			constexpr auto SINGLETON_NOT_INITED = "Singleon must be inited!";
+			constexpr auto SINGLETON_INITED = "Singleon has been inited before";
+		}
+
+		namespace mapManager
+		{
+			constexpr auto NEGATIVE_VALUES = "You need to enter a positive values. Dimensions of map/cell cannot be < 0!";
+		}
+
+		namespace worldConstructor
+		{
+			constexpr auto FAILED_OPEN = "Failed to open file";
+		}
+	}
 }

@@ -8,8 +8,9 @@ namespace pi
 
 		if ( !input.good() )
 		{
-			//Logger
+			Logger::Log( constants::error::worldConstructor::FAILED_OPEN, Logger::stream_t::BOTH, Logger::type_t::ERROR );
 		}
+
 		int tempID;
 
 		for ( int j = 0; j < unitWorldSize.y; j++ )

@@ -1,6 +1,6 @@
 /*
-Conrad 'Condzi' Kubacki 2017
-https://github.com/condzi
+	Conrad 'Condzi' Kubacki 2017
+	https://github.com/condzi
 */
 
 #pragma once
@@ -19,8 +19,8 @@ namespace pi
 
 	/*
 	===============================================================================
-	Tag Component struct contains entityID tag field. Tag is set to UNDEFINED
-	by default.
+		Tag Component struct contains entityID tag field. Tag is set to UNDEFINED
+		by default.
 
 	===============================================================================
 	*/

@@ -2,7 +2,7 @@
 
 #pragma warning(disable : 4996) //_CRT_SECURE_NO_WARNINGS
 
-namespace mv
+namespace pi
 {
 	void Logger::Log(const std::string& message, const Logger::stream_t& stream, const Logger::type_t& type)
 	{
