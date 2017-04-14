@@ -2,7 +2,7 @@
 
 namespace pi
 {
-	void WorldConstructor::createWorld( sf::Vector2i unitWorldSize, int mapNumber )
+	void WorldConstructor::CreateWorld( const sf::Vector2i& unitWorldSize, int mapNumber )
 	{
 		std::ifstream input( "data/maps/map" + std::to_string( mapNumber ) +".txt" );
 
@@ -18,7 +18,7 @@ namespace pi
 			for ( int i = 0; i < unitWorldSize.x; i++ )
 			{
 				input >> tempID;
-				MapManager::getInstance().addCell( tempID, sf::Vector2i(i,j));
+				MapManager::GetInstance().addCell( tempID, sf::Vector2i(i,j));
 			}
 		}
 	}

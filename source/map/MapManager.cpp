@@ -6,7 +6,7 @@ namespace pi
 
 	MapManager* MapManager::instance;
 
-	MapManager & MapManager::getInstance()
+	MapManager & MapManager::GetInstance()
 	{
 		if ( instance == nullptr )
 		{
@@ -25,7 +25,7 @@ namespace pi
 		MapManager::unitWorldSize = uWorldSize;
 	}
 
-	void MapManager::createInstance( sf::Vector2i uWorldSize )
+	void MapManager::CreateInstance( sf::Vector2i uWorldSize )
 	{
 		if ( instance == nullptr )
 			instance = new MapManager( uWorldSize );
@@ -35,18 +35,18 @@ namespace pi
 		}
 	}
 
-	sf::Vector2i MapManager::getUnitWorldSize()
+	sf::Vector2i MapManager::GetUnitWorldSize()
 	{
 		return MapManager::unitWorldSize;
 	}
 
 
-	bool MapManager::isInMap( sf::Vector2i & unitPosition )
+	bool MapManager::IsInMap( sf::Vector2i & unitPosition )
 	{
-		return isInMap( unitPosition.x, unitPosition.y );
+		return IsInMap( unitPosition.x, unitPosition.y );
 	}
 
-	bool MapManager::isInMap( unsigned int i, unsigned int j )
+	bool MapManager::IsInMap( unsigned int i, unsigned int j )
 	{
 		return i >= 0 && i < unitWorldSize.x &&
 			j >= 0 && j < unitWorldSize.y;

@@ -2,6 +2,29 @@
 
 namespace pg
 {
+	void Renderer::GenerateMapTexture()
+	{
+		auto mapCells = pi::MapManager::GetInstance().GetCells();
+
+		this->finalMapTexture.clear();
+		this->finalMapTexture.create
+		(
+			pi::MapManager::GetInstance().GetUnitWorldSize().x * constants::cell::CELL_DIMENSIONS.x,
+			pi::MapManager::GetInstance().GetUnitWorldSize().y * constants::cell::CELL_DIMENSIONS.y
+		);
+		for ( auto& cell : mapCells )
+		{
+			auto& cellSprite = cell.GetSprite();
+			cellSprite.setTexture( *this->mapTextureSheet.lock() );
+			cellSprite.setTextureRect( { 0,0, constants::cell::CELL_DIMENSIONS.x * cell.GetID(), constants::cell::CELL_DIMENSIONS.y } );
+
+			this->finalMapTexture.draw( cellSprite );
+		}
+
+		this->finalMapTexture.display();
+		this->mapSprite.setTexture( this->finalMapTexture.getTexture() );
+	}
+
 	void Renderer::Render()
 	{
 		std::vector<std::shared_ptr<DrawableComponent>> drawables;
@@ -10,6 +33,8 @@ namespace pg
 			for ( auto& wrapper : block.data )
 				if ( wrapper.ownerEntityID != ecs::UNASSIGNED_ENTITY_ID )
 					drawables.push_back( std::static_pointer_cast<DrawableComponent>( wrapper.data ) );
+
+		this->window.draw( this->mapSprite );
 
 		auto drawLayersInterval = this->getDrawLayersInterval( drawables );
 		size_t entitiesAlreadyDrawn = 0;

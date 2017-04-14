@@ -9,7 +9,18 @@ namespace pi
 	class Cell
 	{
 	public:
-		Cell( int identifier, sf::Vector2i unitPosition );
+		Cell( int identifier, const sf::Vector2i& unitPosition );
+
+		int GetID()
+		{
+			return this->id;
+		}
+
+		sf::Sprite& GetSprite()
+		{
+			return this->object;
+		}
+
 	private:
 		const int id;
 		
