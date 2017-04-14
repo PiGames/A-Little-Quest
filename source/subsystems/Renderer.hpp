@@ -36,6 +36,10 @@ namespace pg
 		{
 			this->window.display();
 		}
+		void Clear()
+		{
+			this->drawableBlocks.clear();
+		}
 
 	private:
 		std::vector<std::reference_wrapper<ecs::internal::componentBlock_t>> drawableBlocks;
