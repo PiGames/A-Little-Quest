@@ -3,10 +3,10 @@
 namespace pi
 {
 	template<class T>
-	struct coord_t
+	struct constexprCoord_t
 	{
 		T x, y;
-		constexpr coord_t( T xx, T yy ) :
+		constexpr constexprCoord_t( T xx, T yy ) :
 			x( xx ), y( yy )
 		{}
 	};
