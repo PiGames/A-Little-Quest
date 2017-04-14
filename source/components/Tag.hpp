@@ -5,20 +5,13 @@
 
 #pragma once
 
-namespace pi
+#include "piTypes/Enums.hpp"
+
+namespace pg
 {
-	enum class entityID
-	{
-		UNDEFINED = 0,
-		PLAYER,
-		ENEMY,
-
-		GUI_BUTTON_PLAY,
-		GUI_BUTTON_EXIT
-	};
-
 	/*
 	===============================================================================
+	Created by: Condzi
 		Tag Component struct contains entityID tag field. Tag is set to UNDEFINED
 		by default.
 
@@ -26,9 +19,9 @@ namespace pi
 	*/
 	struct TagComponent final
 	{
-		entityID tag;
+		entityID_t tag;
 
-		TagComponent( entityID tg = entityID::UNDEFINED ) :
+		TagComponent( entityID_t tg = entityID_t::UNDEFINED ) :
 			tag( tg )
 		{}
 	};

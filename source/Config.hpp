@@ -1,6 +1,6 @@
 #pragma once
 
-#include "piTypes\Point.hpp"
+#include "piTypes/Coord.hpp"
 
 namespace constants
 {
