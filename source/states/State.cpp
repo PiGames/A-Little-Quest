@@ -1,8 +1,3 @@
-/*
-	Conrad 'Condzi' Kubacki 2017
-	https://github.com/condzi
-*/
-
 #include "State.hpp"
 
 namespace pi
