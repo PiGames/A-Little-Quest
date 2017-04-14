@@ -8,8 +8,12 @@ int main()
 	std::cout << "Hello World!\n";
 
 	pi::MapManager::createInstance( sf::Vector2i( 64, 64 ) );
-	pi::WorldConstructor worldConstructor;
-	worldConstructor.createWorld( sf::Vector2i( 5, 5 ), 0 );
+
+	{
+		pi::WorldConstructor worldConstructor;
+		worldConstructor.createWorld( sf::Vector2i( 5, 5 ), 0 );
+	}
+
 
 
 
