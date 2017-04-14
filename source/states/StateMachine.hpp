@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "State.hpp"
+#include "Config.hpp"
 
 namespace pi
 {

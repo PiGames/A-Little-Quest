@@ -1,8 +1,3 @@
-/*
-	Conrad 'Condzi' Kubacki 2017
-	https://github.com/condzi
-*/
-
 #include "StateMachine.hpp"
 
 namespace pi
@@ -23,7 +18,7 @@ namespace pi
 
 		this->stack.resize( this->factories.size() );
 
-		while ( this->actualState != EXIT_STATE )
+		while ( this->actualState != constants::EXIT_STATE )
 		{
 			this->stack[actualState] = std::move( this->createState( this->actualState ) );
 
