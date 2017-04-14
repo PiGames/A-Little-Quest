@@ -13,14 +13,14 @@ namespace mv
 	class Logger
 	{
 	public:
-		enum class STREAM
+		enum class stream_t
 		{
 			CONSOLE,
 			FILE, 
 			BOTH
 		};
 
-		enum class TYPE
+		enum class type_t
 		{
 			INFO = 0,
 			SUGGESTION = 1,
@@ -28,16 +28,16 @@ namespace mv
 			ERROR = 3
 		};
 
-		static void Log(const std::string&, const Logger::STREAM& = Logger::STREAM::CONSOLE, const Logger::TYPE& = Logger::TYPE::ERROR);
+		static void Log(const std::string&, const Logger::stream_t& = Logger::stream_t::CONSOLE, const Logger::type_t& = Logger::type_t::ERROR);
 
 	private:
 
-		static void sendMessage(const std::string& message, Logger::STREAM stream, std::string &prefix);
+		static void sendMessage(const std::string& message, Logger::stream_t stream, std::string &prefix);
 
 		static void consoleMessage(const std::string&message, std::string &prefix, std::time_t& time);
 
 		static void fileMessage(const std::string&, std::string &prefix, std::time_t& time);
 
-		static void setPrefix(Logger::TYPE type, std::string &prefix);
+		static void setPrefix(Logger::type_t type, std::string &prefix);
 	};
 }

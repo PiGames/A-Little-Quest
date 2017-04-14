@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "Config.hpp"
+
 namespace pi
 {
 	class Cell

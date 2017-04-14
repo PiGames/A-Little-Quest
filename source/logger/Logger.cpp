@@ -4,33 +4,33 @@
 
 namespace mv
 {
-	void Logger::Log(const std::string& message, const Logger::STREAM& stream, const Logger::TYPE& type)
+	void Logger::Log(const std::string& message, const Logger::stream_t& stream, const Logger::type_t& type)
 	{
 		std::string prefix;
 		setPrefix(type,prefix);
 		sendMessage(message, stream,prefix);
 	}
 
-	void Logger::sendMessage(const std::string& message, Logger::STREAM stream, std::string &prefix)
+	void Logger::sendMessage(const std::string& message, Logger::stream_t stream, std::string &prefix)
 	{
 		std::chrono::time_point<std::chrono::system_clock> date = std::chrono::system_clock::now();
 		std::time_t time = std::chrono::system_clock::to_time_t(date);
 
 		switch (stream)
 		{
-			case Logger::STREAM::FILE:
+			case Logger::stream_t::FILE:
 			{
 				fileMessage(message,prefix,time);
 				break;
 			}
 
-			case Logger::STREAM::CONSOLE:
+			case Logger::stream_t::CONSOLE:
 			{
 				consoleMessage(message,prefix, time);
 				break;
 			}
 
-			case Logger::STREAM::BOTH:
+			case Logger::stream_t::BOTH:
 			{
 				consoleMessage(message,prefix, time);
 				fileMessage(message,prefix, time);
@@ -55,31 +55,31 @@ namespace mv
 		file << message << "\n\n";
 	}
 
-	void Logger::setPrefix(Logger::TYPE type, std::string &prefix)
+	void Logger::setPrefix(Logger::type_t type, std::string &prefix)
 	{
 		switch (type)
 		{
 
-			case Logger::TYPE::ERROR:
+			case Logger::type_t::ERROR:
 			{
 				prefix = constants::logger::PREFIX_ERROR;
 				break;
 			}
 
 				
-			case Logger::TYPE::INFO:
+			case Logger::type_t::INFO:
 			{
 				prefix = constants::logger::PREFIX_INFO;
 				break;
 			}
 			
-			case Logger::TYPE::SUGGESTION:
+			case Logger::type_t::SUGGESTION:
 			{
 				prefix = constants::logger::PREFIX_SUGGESTION;
 				break;
 			}
 			
-			case Logger::TYPE::WARNING:
+			case Logger::type_t::WARNING:
 			{
 				prefix = constants::logger::PREFIX_WARNING;
 				break;
