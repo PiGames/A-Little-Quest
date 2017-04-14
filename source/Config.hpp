@@ -23,6 +23,6 @@ namespace constants
 	{
 		constexpr auto ROTATION_MODES = 4;
 		constexpr auto STRAIGHT_ANGLE = 90;
-		constexpr pi::CompileTimeDoubleTemplateValuesForExampleCompileTimeDoubleTemplateValuesForExamplefloatDoubleFloatType<float> CELL_DIMENSIONS = { 64,64 };
+		constexpr pi::coord_t<float> CELL_DIMENSIONS = { 64,64 };
 	}
 }
