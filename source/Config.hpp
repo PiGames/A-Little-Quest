@@ -10,6 +10,6 @@ namespace constants
 
 	namespace cell
 	{
-		//constexpr auto 
+		constexpr auto 
 	}
 }
