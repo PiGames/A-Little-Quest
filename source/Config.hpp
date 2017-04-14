@@ -9,7 +9,11 @@ namespace constants
 		constexpr auto MAP_PREFIX = "MAP";
 	}
 
-	namespace cell
+	namespace logger
 	{
+		constexpr auto PREFIX_INFO = "[INFO]";
+		constexpr auto PREFIX_SUGGESTION = "[SUGGESTION]";
+		constexpr auto PREFIX_WARNING = "[WARNING]";
+		constexpr auto PREFIX_ERROR = "[ERROR]";
 	}
 }

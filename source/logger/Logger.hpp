@@ -12,13 +12,12 @@ namespace mv
 {
 	class Logger
 	{
-		/* ===Objects=== */
 	public:
 		enum class STREAM
 		{
-			CONSOLE = 0,
-			FILE = 1,
-			BOTH = 2
+			CONSOLE,
+			FILE, 
+			BOTH
 		};
 
 		enum class TYPE
@@ -28,12 +27,9 @@ namespace mv
 			WARNING = 2,
 			ERROR = 3
 		};
-	protected:
-	private:
-		/* ===Methods=== */
-	public:
+
 		static void Log(const std::string&, const Logger::STREAM& = Logger::STREAM::CONSOLE, const Logger::TYPE& = Logger::TYPE::ERROR);
-	protected:
+
 	private:
 
 		static void sendMessage(const std::string& message, Logger::STREAM stream, std::string &prefix);

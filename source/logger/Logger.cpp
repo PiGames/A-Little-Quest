@@ -62,26 +62,26 @@ namespace mv
 
 			case Logger::TYPE::ERROR:
 			{
-				//prefix = constants::logger::PREFIX_ERROR;
+				prefix = constants::logger::PREFIX_ERROR;
 				break;
 			}
 
 				
 			case Logger::TYPE::INFO:
 			{
-				//prefix = constants::logger::PREFIX_INFO;
+				prefix = constants::logger::PREFIX_INFO;
 				break;
 			}
 			
 			case Logger::TYPE::SUGGESTION:
 			{
-				//prefix = constants::logger::PREFIX_SUGGESTION;
+				prefix = constants::logger::PREFIX_SUGGESTION;
 				break;
 			}
 			
 			case Logger::TYPE::WARNING:
 			{
-				//prefix = constants::logger::PREFIX_WARNING;
+				prefix = constants::logger::PREFIX_WARNING;
 				break;
 			}
 		}
