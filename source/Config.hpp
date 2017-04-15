@@ -23,7 +23,7 @@ namespace constants
 	{
 		constexpr auto ROTATION_MODES = 4;
 		constexpr auto STRAIGHT_ANGLE = 90;
-		constexpr pi::constexprCoord_t<int8_t> CELL_DIMENSIONS = { 64,64 };
+		constexpr pi::constexprCoord_t<int8_t> CELL_DIMENSIONS = { 15,15 };
 	}
 
 	namespace error

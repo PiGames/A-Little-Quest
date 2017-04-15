@@ -10,11 +10,11 @@ int main()
 {
 	std::cout << "Hello World!\n";
 
-	pi::MapManager::CreateInstance( sf::Vector2i( 15, 15 ) );
+	pi::MapManager::CreateInstance( sf::Vector2i( 5, 5 ) );
 
 	{
 		pi::WorldConstructor worldConstructor;
-		worldConstructor.CreateWorld( sf::Vector2i( 15, 15 ), 0 );
+		worldConstructor.CreateWorld( sf::Vector2i( 5, 5 ), 0 );
 	}
 
 	sf::RenderWindow win( { 800,600 }, "title!" );

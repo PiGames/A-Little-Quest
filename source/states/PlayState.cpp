@@ -5,12 +5,12 @@ namespace pg
 	void PlayState::OnStart()
 	{
 		this->StartThread();
-		
+
 		this->loadTextures();
 		this->renderer.SetComponentBlocks( *this->ecsSystem.ReserveComponentBlocks<DrawableComponent>( 8 ) );
 		this->renderer.SetMapTextureSheet( pi::ResourceHolder::GetTexture( 1 ) );
 		this->renderer.GenerateMapTexture();
-		auto wrapper =  this->ecsSystem.AddComponent<DrawableComponent>( this->ecsSystem.CreateEntity() );
+		auto wrapper = this->ecsSystem.AddComponent<DrawableComponent>( this->ecsSystem.CreateEntity() );
 		wrapper.ResetComponent<DrawableComponent>( 1 );
 		sf::Sprite spr;
 		spr.setTexture( *pi::ResourceHolder::GetTexture( 0 ).lock() );
@@ -31,7 +31,7 @@ namespace pg
 	{
 		while ( true )
 		{
-			this->renderer.ClearWindow();
+			this->renderer.ClearWindow( sf::Color::Cyan );
 			this->renderer.Render();
 			this->renderer.Display();
 		}
@@ -49,7 +49,7 @@ namespace pg
 		pi::ResourceHolder::textures.back()->loadFromFile( "data/textures/playerPlaceholder.png" );
 		pi::ResourceHolder::textures.back()->SetResourcePriority( 0 );
 		pi::ResourceHolder::textures.back()->SetResourceID( 0 );
-	
+
 
 		pi::ResourceHolder::textures.emplace_back( std::make_shared<pi::textureResource_t>() );
 		pi::ResourceHolder::textures.back()->loadFromFile( "data/textures/cellAtlas.png" );

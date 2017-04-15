@@ -4,7 +4,7 @@ namespace pg
 {
 	void Renderer::GenerateMapTexture()
 	{
-		auto mapCells = pi::MapManager::GetInstance().GetCells();
+		auto& mapCells = pi::MapManager::GetInstance().GetCells();
 
 		this->finalMapTexture.clear();
 		this->finalMapTexture.create
@@ -15,8 +15,9 @@ namespace pg
 		for ( auto& cell : mapCells )
 		{
 			auto& cellSprite = cell.GetSprite();
+			pi::Logger::Log( "(" + std::to_string( cellSprite.getPosition().x ) + ", " + std::to_string( cellSprite.getPosition().y ) + ")", pi::Logger::CONSOLE, pi::Logger::INFO );
 			cellSprite.setTexture( *this->mapTextureSheet.lock() );
-			cellSprite.setTextureRect( { 0,0, constants::cell::CELL_DIMENSIONS.x * cell.GetID(), constants::cell::CELL_DIMENSIONS.y } );
+			cellSprite.setTextureRect( { constants::cell::CELL_DIMENSIONS.x * cell.GetID(),0, constants::cell::CELL_DIMENSIONS.x, constants::cell::CELL_DIMENSIONS.y } );
 
 			this->finalMapTexture.draw( cellSprite );
 		}
