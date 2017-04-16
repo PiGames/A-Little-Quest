@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 

@@ -15,9 +15,11 @@ namespace pg
 		for ( auto& cell : mapCells )
 		{
 			auto& cellSprite = cell.GetSprite();
-			//pi::Logger::Log( "(" + std::to_string( cellSprite.getPosition().x ) + ", " + std::to_string( cellSprite.getPosition().y ) + ")" +std::to_string( cell.GetID()), pi::Logger::CONSOLE, pi::Logger::INFO );
 			cellSprite.setTexture( *this->mapTextureSheet.lock() );
-			cellSprite.setTextureRect(sf::IntRect(constants::cell::CELL_DIMENSIONS.x * cell.GetID(),0, constants::cell::CELL_DIMENSIONS.x, constants::cell::CELL_DIMENSIONS.y));
+			// Cell texture starts from 0 not from 1!
+			auto cellID = cell.GetID() - 1;
+			assert( cellID < 0 );
+			cellSprite.setTextureRect( sf::IntRect( constants::cell::CELL_DIMENSIONS.x * cellID, 0, constants::cell::CELL_DIMENSIONS.x, constants::cell::CELL_DIMENSIONS.y ) );
 
 			this->finalMapTexture.draw( cellSprite );
 		}
