@@ -18,7 +18,7 @@ namespace pg
 			cellSprite.setTexture( *this->mapTextureSheet.lock() );
 			// Cell texture starts from 0 not from 1!
 			auto cellID = cell.GetID() - 1;
-			assert( cellID < 0 );
+			assert( cellID >= 0 );
 			cellSprite.setTextureRect( sf::IntRect( constants::cell::CELL_DIMENSIONS.x * cellID, 0, constants::cell::CELL_DIMENSIONS.x, constants::cell::CELL_DIMENSIONS.y ) );
 
 			this->finalMapTexture.draw( cellSprite );
