@@ -17,9 +17,12 @@ namespace pg
 			auto& cellSprite = cell.GetSprite();
 			cellSprite.setTexture( *this->mapTextureSheet.lock() );
 			// Cell texture starts from 0 not from 1!
-			auto cellID = cell.GetID() - 1;
+			auto cellID = cell.GetID();
 			assert( cellID >= 0 );
 			cellSprite.setTextureRect( sf::IntRect( constants::cell::CELL_DIMENSIONS.x * cellID, 0, constants::cell::CELL_DIMENSIONS.x, constants::cell::CELL_DIMENSIONS.y ) );
+
+			cell.SetCenter();
+			//cell.ConfirmRotation();
 
 			this->finalMapTexture.draw( cellSprite );
 		}
