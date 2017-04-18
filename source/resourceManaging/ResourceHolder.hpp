@@ -23,29 +23,27 @@ namespace pi
 	/*
 	===============================================================================
 	Created by: Condzi
-		Static structure for resource managing. Initialize it before use and shutdown
-		on the end of the program. To add resources use public vectors. To custom
-		delete use DeleteAll... methods. To get resource, use Get... methods.
+		Resource Holder struct is created for resource managing. To add resources
+		use public vectors. For deleting use specified DeleteAll... methods. To get
+		resource, use Get... methods.
 
 	===============================================================================
 	*/
 	struct ResourceHolder final
 	{
-		ResourceHolder() = delete;
+		ResourceHolder()
+		{}
 
-		static std::vector<std::shared_ptr<textureResource_t>> textures;
-		static std::vector<std::shared_ptr<uiTextResource_t>> texts;
-		static std::vector<std::shared_ptr<fontResource_t>> fonts;
+		std::vector<std::shared_ptr<textureResource_t>> textures;
+		std::vector<std::shared_ptr<uiTextResource_t>> uiTexts;
+		std::vector<std::shared_ptr<fontResource_t>> fonts;
 
-		static void Initialize();
-		static void Shutdown();
+		std::weak_ptr<textureResource_t> GetTexture( uint8_t id );
+		std::weak_ptr<uiTextResource_t> GetText( uint8_t id );
+		std::weak_ptr<fontResource_t> GetFont( uint8_t id );
 
-		static void DeleteAllResources();
-		static void DeleteAllResourcesByPriority( uint8_t priority );
-		static void DeleteAllResourcesByID( uint8_t id );
-
-		static std::weak_ptr<textureResource_t> GetTexture( uint8_t id );
-		static std::weak_ptr<uiTextResource_t> GetText( uint8_t id );
-		static std::weak_ptr<fontResource_t> GetFont( uint8_t id );
+		void DeleteAllResources();
+		void DeleteAllResourcesByPriority( uint8_t priority );
+		void DeleteAllResourcesByID( uint8_t id );
 	};
 }

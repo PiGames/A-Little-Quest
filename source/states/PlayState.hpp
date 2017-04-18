@@ -1,6 +1,7 @@
 #pragma once
 
 #include "State.hpp"
+#include "States.hpp"
 #include "ecs/ECS.hpp"
 #include "resourceManaging/ResourceHolder.hpp"
 #include "subsystems/Renderer.hpp"
@@ -12,20 +13,24 @@ namespace pg
 		public pi::State
 	{
 	public:
-		PlayState( sf::RenderWindow* window ) :
-			State( window ),
-			renderer( *this->windowPtr )
+		explicit PlayState( sf::RenderWindow& win, pi::ResourceHolder& resCache, ecs::SystemBase& ecsSys ) :
+			State( win ),
+			resourceCache( resCache ),
+			ecsSystem( ecsSys ),
+			renderer( win )
 		{}
 
 		void OnStart() override;
 		void OnStop() override;
-		int16_t Run() override;
+		uint8_t Run() override;
 
-		void UpdateThread( float time, sf::RenderWindow& window ) override;
+		void UpdateThread( float time ) override;
 
 	private:
-		ecs::SystemBase ecsSystem;
-		pg::Renderer renderer;
+		pi::ResourceHolder& resourceCache;
+		ecs::SystemBase& ecsSystem;
+		Renderer renderer;
+
 
 		void loadTextures();
 		void freeResources();

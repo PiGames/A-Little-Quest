@@ -7,31 +7,15 @@
 
 namespace pi
 {
-	std::vector<std::shared_ptr<textureResource_t>> ResourceHolder::textures;
-	std::vector<std::shared_ptr<uiTextResource_t>> ResourceHolder::texts;
-	std::vector<std::shared_ptr<fontResource_t>> ResourceHolder::fonts;
-
-
-	void ResourceHolder::Initialize()
-	{
-		Logger::Log( "Resource Holder initialized!", Logger::BOTH, Logger::INFO );
-	}
-
-	void ResourceHolder::Shutdown()
-	{
-		ResourceHolder::DeleteAllResources();
-		Logger::Log( "Resource Holder shutdown!", Logger::BOTH, Logger::INFO );
-	}
-
 	void ResourceHolder::DeleteAllResources()
 	{
 		Logger::Log( "Starting to delete all resources...", Logger::BOTH, Logger::INFO );
-		Logger::Log( std::to_string( ResourceHolder::textures.size() ) + " Textures", Logger::BOTH, Logger::INFO );
-		ResourceHolder::textures.clear();
-		Logger::Log( std::to_string( ResourceHolder::texts.size() ) + " Texts", Logger::BOTH, Logger::INFO );
-		ResourceHolder::texts.clear();
-		Logger::Log( std::to_string( ResourceHolder::fonts.size() ) + " Fonts", Logger::BOTH, Logger::INFO );
-		ResourceHolder::fonts.clear();
+		Logger::Log( std::to_string( this->textures.size() ) + " Textures", Logger::BOTH, Logger::INFO );
+		this->textures.clear();
+		Logger::Log( std::to_string( this->uiTexts.size() ) + " Texts", Logger::BOTH, Logger::INFO );
+		this->uiTexts.clear();
+		Logger::Log( std::to_string( this->fonts.size() ) + " Fonts", Logger::BOTH, Logger::INFO );
+		this->fonts.clear();
 		Logger::Log( "All resources deleted!", Logger::BOTH, Logger::INFO );
 	}
 
@@ -41,29 +25,29 @@ namespace pi
 
 		uint16_t counter = 0;
 
-		for ( auto textureIterator = ResourceHolder::textures.begin(); textureIterator != ResourceHolder::textures.end(); )
+		for ( auto textureIterator = this->textures.begin(); textureIterator != this->textures.end(); )
 		{
 			if ( ( *textureIterator )->GetResourcePriority() == priority )
 			{
-				textureIterator = ResourceHolder::textures.erase( textureIterator );
+				textureIterator = this->textures.erase( textureIterator );
 				counter++;
 			} else
 				textureIterator++;
 		}
-		for ( auto textsIterator = ResourceHolder::texts.begin(); textsIterator != ResourceHolder::texts.end(); )
+		for ( auto textsIterator = this->uiTexts.begin(); textsIterator != this->uiTexts.end(); )
 		{
 			if ( ( *textsIterator )->GetResourcePriority() == priority )
 			{
-				textsIterator = ResourceHolder::texts.erase( textsIterator );
+				textsIterator = this->uiTexts.erase( textsIterator );
 				counter++;
 			} else
 				textsIterator++;
 		}
-		for ( auto fontIterator = ResourceHolder::fonts.begin(); fontIterator != ResourceHolder::fonts.end(); )
+		for ( auto fontIterator = this->fonts.begin(); fontIterator != this->fonts.end(); )
 		{
 			if ( ( *fontIterator )->GetResourcePriority() == priority )
 			{
-				fontIterator = ResourceHolder::fonts.erase( fontIterator );
+				fontIterator = this->fonts.erase( fontIterator );
 				counter++;
 			} else
 				fontIterator++;
@@ -78,29 +62,29 @@ namespace pi
 
 		uint16_t counter = 0;
 
-		for ( auto textureIterator = ResourceHolder::textures.begin(); textureIterator != ResourceHolder::textures.end(); )
+		for ( auto textureIterator = this->textures.begin(); textureIterator != this->textures.end(); )
 		{
 			if ( ( *textureIterator )->GetResourceID() == id )
 			{
-				textureIterator = ResourceHolder::textures.erase( textureIterator );
+				textureIterator = this->textures.erase( textureIterator );
 				counter++;
 			} else
 				textureIterator++;
 		}
-		for ( auto textsIterator = ResourceHolder::texts.begin(); textsIterator != ResourceHolder::texts.end(); )
+		for ( auto textsIterator = this->uiTexts.begin(); textsIterator != this->uiTexts.end(); )
 		{
 			if ( ( *textsIterator )->GetResourceID() == id )
 			{
-				textsIterator = ResourceHolder::texts.erase( textsIterator );
+				textsIterator = this->uiTexts.erase( textsIterator );
 				counter++;
 			} else
 				textsIterator++;
 		}
-		for ( auto fontIterator = ResourceHolder::fonts.begin(); fontIterator != ResourceHolder::fonts.end(); )
+		for ( auto fontIterator = this->fonts.begin(); fontIterator != this->fonts.end(); )
 		{
 			if ( ( *fontIterator )->GetResourceID() == id )
 			{
-				fontIterator = ResourceHolder::fonts.erase( fontIterator );
+				fontIterator = this->fonts.erase( fontIterator );
 				counter++;
 			} else
 				fontIterator++;
@@ -111,7 +95,7 @@ namespace pi
 
 	std::weak_ptr<textureResource_t> ResourceHolder::GetTexture( uint8_t id )
 	{
-		for ( auto ptr : ResourceHolder::textures )
+		for ( auto ptr : this->textures )
 			if ( ptr->GetResourceID() == id )
 				return ptr;
 
@@ -121,7 +105,7 @@ namespace pi
 
 	std::weak_ptr<uiTextResource_t> ResourceHolder::GetText( uint8_t id )
 	{
-		for ( auto ptr : ResourceHolder::texts )
+		for ( auto ptr : this->uiTexts )
 			if ( ptr->GetResourceID() == id )
 				return ptr;
 
@@ -131,7 +115,7 @@ namespace pi
 
 	std::weak_ptr<fontResource_t> ResourceHolder::GetFont( uint8_t id )
 	{
-		for ( auto ptr : ResourceHolder::fonts )
+		for ( auto ptr : this->fonts )
 			if ( ptr->GetResourceID() == id )
 				return ptr;
 

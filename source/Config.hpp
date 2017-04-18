@@ -1,10 +1,12 @@
 #pragma once
 
+#include <cinttypes>
+
 #include "piTypes/Coord.hpp"
 
 namespace constants
 {
-	constexpr int16_t EXIT_STATE = 0xdad;
+	constexpr int16_t EXIT_STATE = 0;
 
 	namespace worldConstructor
 	{

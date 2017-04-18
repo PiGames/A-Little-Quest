@@ -2,7 +2,7 @@
 
 namespace pi
 {
-	std::unique_ptr<State> StateMachine::createState( int16_t id )
+	std::unique_ptr<State> StateMachine::createState( uint8_t id )
 	{
 		auto result = this->factories.find( id );
 
@@ -14,11 +14,9 @@ namespace pi
 
 	void StateMachine::Run()
 	{
-		int16_t nextState = this->actualState;
+		uint8_t nextState = this->actualState;
 
-		this->stack.resize( this->factories.size() );
-
-		while ( this->actualState != constants::EXIT_STATE )
+		while ( this->actualState != 0 )
 		{
 			this->stack[actualState] = std::move( this->createState( this->actualState ) );
 

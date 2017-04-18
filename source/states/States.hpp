@@ -5,12 +5,20 @@
 namespace pg
 {
 	// Game state enumerations
-	enum class state_t
+	enum state_t : uint8_t
 	{
 		// Change to config value later.
-		EXIT = constants::EXIT_STATE,
-		INIT = 0,
-		MENU,
-		PLAY
+		STATE_EXIT = constants::EXIT_STATE,
+		STATE_INIT,
+		STATE_MENU,
+		STATE_PLAY,
+
+		SUB_STATE_MENU_MAIN,
+		SUB_STATE_MENU_OPTIONS,
+		SUB_STATE_MENU_CREDITS,
+
+		SUB_STATE_PLAY_MAIN,
+		SUB_STATE_PLAY_GAMEOVER,
+		SUB_STATE_PLAY_PAUSE
 	};
 }

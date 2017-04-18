@@ -4,10 +4,7 @@
 #include <cassert>
 #include <unordered_map>
 #include <memory>
-#include <vector>
-
 #include "State.hpp"
-#include "Config.hpp"
 
 namespace pi
 {
@@ -19,21 +16,24 @@ namespace pi
 
 	===============================================================================
 	*/
-	class StateMachine final
+	class StateMachine
 	{
 	public:
-		StateMachine( int16_t startState = 0 ) :
+		explicit StateMachine( uint8_t startState = 0 ) :
 			actualState( startState )
 		{}
 
 		StateMachine( const StateMachine& ) = delete;
 		const StateMachine& operator=( const StateMachine& ) = delete;
 
-		void SetCurrentStateID( int16_t id ) { this->actualState = id; }
+		void SetCurrentStateID( uint8_t id ) 
+		{ 
+			this->actualState = id; 
+		}
 
 		template<class T, typename... Args>
 		typename std::enable_if<std::is_base_of<State, T>::value>::type
-			RegisterState( int16_t id, Args&&... args )
+		RegisterState( uint8_t id, Args&&... args )
 		{
 			this->factories[id] = [&args..., this]()
 			{
@@ -44,10 +44,10 @@ namespace pi
 		void Run();
 
 	private:
-		std::vector<std::unique_ptr<State>> stack;
-		std::unordered_map<int16_t, std::function<std::unique_ptr<State>()>> factories;
-		int16_t actualState;
+		std::unordered_map<uint8_t, std::unique_ptr<State>> stack;
+		std::unordered_map<uint8_t, std::function<std::unique_ptr<State>()>> factories;
+		uint8_t actualState;
 
-		std::unique_ptr<State> createState( int16_t id );
+		std::unique_ptr<State> createState( uint8_t id );
 	};
 }

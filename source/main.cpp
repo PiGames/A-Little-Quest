@@ -4,12 +4,10 @@
 #include "map/WorldConstructor.hpp"
 
 #include "states/PlayState.hpp"
-#include "states/StateMachine.hpp"
+#include "states/Game.hpp"
 
 int main()
 {
-	std::cout << "Hello World!\n";
-
 	pi::MapManager::CreateInstance( sf::Vector2i( 5, 5 ) );
 
 	{
@@ -17,10 +15,10 @@ int main()
 		worldConstructor.CreateWorld( sf::Vector2i( 5, 5 ), 0 );
 	}
 
-	sf::RenderWindow win( { 800,600 }, "title!" );
-	pi::StateMachine stateMachine;
+	pg::Game game("settings.ini", pg::STATE_PLAY);
+	game.RegisterState<pg::PlayState>( pg::STATE_PLAY );
+	
+	game.Run();
 
-	stateMachine.RegisterState<pg::PlayState>( 0, &win );
-	stateMachine.Run();
 	return 0;
 }
