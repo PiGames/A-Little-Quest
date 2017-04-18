@@ -110,37 +110,38 @@ namespace ecs
 		if ( !this->componentsBlocks.size() )
 			return true;
 
-		bool found = false;
-		auto componentBlockPosition = this->componentsBlocks.begin();
-		for ( auto i = this->componentsBlocks.begin(), tooFar = this->componentsBlocks.end(); i != tooFar; i++ )
-			if ( i->hashCode == componentHashCode )
+		for ( auto it = this->componentsBlocks.begin(); it != this->componentsBlocks.end(); it++ )
+			if ( it->hashCode == componentHashCode )
 			{
-				found = true;
-				componentBlockPosition = i;
+				if ( it->HasFreeSpace() )
+					return false;
 			}
 
-		if ( !componentBlockPosition->HasFreeSpace() ||
-			componentBlockPosition->hashCode != componentHashCode )
-			return true;
-
-		return false;
+		return true;
 	}
 
 	componentWrapper_t SystemBase::addToBlock( entityID_t entity, size_t componentHashCode )
 	{
-		auto componentBlockPosition = this->componentsBlocks.begin();
-		for ( auto i = this->componentsBlocks.begin(), tooFar = this->componentsBlocks.end(); i != tooFar; i++ )
-			if ( i->hashCode == componentHashCode )
-				componentBlockPosition = i;
+		ecs::componentWrapper_t* freeComponentWrapper = nullptr;
+		for ( auto& compblock : this->componentsBlocks )
+		{
+			// Searching for maching block...
+			if ( compblock.hashCode == componentHashCode )
+			{
+				// Checking if entity already has this component
+				for ( const auto& component : compblock.data )
+					if ( component.ownerEntityID == entity )
+							return componentWrapper_t( 0 );
 
-		for ( const auto& component : componentBlockPosition->data )
-			if ( component.ownerEntityID == entity )
-				return componentWrapper_t( 0 );
+				if ( compblock.HasFreeSpace() )
+					freeComponentWrapper = compblock.GetFreeComponentWrapper();
+			}
+		}
 
-		auto& component = *componentBlockPosition->GetFreeComponentWrapper();
-		component.ownerEntityID = entity;
+		ECS_ASSERT( freeComponentWrapper != nullptr, "Couldn't add component to block - no free space" );
 
-		return component;
+		freeComponentWrapper->ownerEntityID = entity;
+		return *freeComponentWrapper;
 	}
 
 	bool SystemBase::isEntityInSystem( entityID_t id )

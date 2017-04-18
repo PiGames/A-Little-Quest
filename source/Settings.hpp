@@ -11,31 +11,31 @@ namespace pg
 
 	===============================================================================
 	*/
-	class Settings final :
+class Settings final :
 		public pi::INIFile
 	{
 	public:
-		~Settings()
-		{
-			delete Settings::instance;
-		}
+		Settings( const Settings& ) = delete;
+		Settings& operator=( const Settings& ) = delete;
 
 		static Settings& GetInstance()
 		{
-			if ( !Settings::instance )
-				Settings::instance = new Settings();
-			return *Settings::instance;
+			static Settings instance;
+			return instance;
 		}
 
 		void GenerateDefault( const std::string& path )
 		{
-			this->AddString( "WINDOW", "TITLE", "Platform Game" );
+			this->AddString( "WINDOW", "TITLE", "'Platform Game'" );
 			this->AddInt( "WINDOW", "FPS", 64 );
+			this->AddInt( "WINDOW", "X", 1280 );
+			this->AddInt( "WINDOW", "Y", 720 );
 
 			this->SaveToFile( path, "; Default config. Don't change if you don't know what are you doing!" );
 		}
 
 	private:
-		static Settings* instance;
+		Settings()
+		{}
 	};
 }
