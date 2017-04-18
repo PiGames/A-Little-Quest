@@ -40,4 +40,11 @@ namespace pi
 
 		static void setPrefix( Logger::type_t type, std::string &prefix );
 	};
+
+#if defined _DEBUG
+#define DEBUG_LOG( message, output, prefix ) Logger::Log( message, output, prefix ); 
+#else
+#define DEBUG_LOG( message, prefix, output ) 
+#endif
+
 }

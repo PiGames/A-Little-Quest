@@ -10,14 +10,8 @@ namespace pg
 		this->renderer.SetComponentBlocks( *this->ecsSystem.ReserveComponentBlocks<DrawableComponent>( 8 ) );
 		this->renderer.SetMapTextureSheet( this->resourceCache.GetTexture( 1 ) );
 		this->renderer.GenerateMapTexture();
-		auto wrapper = this->ecsSystem.AddComponent<DrawableComponent>( this->ecsSystem.CreateEntity() );
-		std::static_pointer_cast<DrawableComponent>( wrapper.data )->sprites.clear();
-		std::static_pointer_cast<DrawableComponent>( wrapper.data )->drawLayer = 0;
 
-		sf::Sprite spr;
-		spr.setTexture( *this->resourceCache.GetTexture( 0 ).lock() );
-		std::static_pointer_cast<DrawableComponent>( wrapper.data )->sprites.push_back( spr );
-
+		this->addSubState<PlayMainSubState>( SUB_STATE_PLAY_MAIN, this->window, this->resourceCache, this->ecsSystem, this->renderer );
 		this->EndThread();
 	}
 

@@ -9,6 +9,6 @@ State::addSubState( uint8_t id, Args&& ...args )
 		return;
 	}
 #endif
-	DEBUG_LOG( "Added SubState: " + std::to_string( id ), Logger::INFO, Logger::BOTH );
+	DEBUG_LOG( "Added SubState: " + std::to_string( id ), Logger::BOTH, Logger::INFO );
 	this->subStates.insert( std::make_pair( id, std::make_unique<T>( std::forward<Args>( args )... ) ) );
 }

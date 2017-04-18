@@ -6,6 +6,7 @@
 #include "resourceManaging/ResourceHolder.hpp"
 #include "subsystems/Renderer.hpp"
 #include "components/Drawable.hpp"
+#include "PlayMainSubState.hpp"
 
 namespace pg
 {
@@ -30,8 +31,7 @@ namespace pg
 		pi::ResourceHolder& resourceCache;
 		ecs::SystemBase& ecsSystem;
 		Renderer renderer;
-
-
+	
 		void loadTextures();
 		void freeResources();
 	};
