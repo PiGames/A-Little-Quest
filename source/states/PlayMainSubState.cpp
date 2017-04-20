@@ -4,35 +4,29 @@ namespace pg
 {
 	void pg::PlayMainSubState::OnStart()
 	{
-		ecs::entityID_t testEntity = this->ecsSystem.CreateEntity();
-		auto wrapper = this->ecsSystem.AddComponent<DrawableComponent>( testEntity );
-		std::static_pointer_cast<DrawableComponent>( wrapper.data )->sprites.clear();
-		std::static_pointer_cast<DrawableComponent>( wrapper.data )->drawLayer = 0;
-
-		sf::Sprite spr;
-		spr.setTexture( *this->resourceCache.GetTexture( 0 ).lock() );
-		std::static_pointer_cast<DrawableComponent>( wrapper.data )->sprites.push_back( spr );
-
-		auto tag = this->ecsSystem.AddComponent<TagComponent>( testEntity );
-		std::static_pointer_cast<TagComponent>( tag.data )->tag = entityID_t::PLAYER;
+		Player player( this->ecsSystem );
+		player.SetUpComponents();
+		auto drawable = player.AddComponent<DrawableComponent>();
+		drawable->drawLayer = LAYER_PLAYER;
+		drawable->sprites.emplace_back();
+		drawable->sprites.back().setTexture( *this->resourceCache.GetTexture( 0 ).lock() );
+		entities.push_back( std::make_shared<Player>( player ) );
 	}
 
 	void PlayMainSubState::OnStop()
 	{
-		this->ecsSystem.ForEachLambda<TagComponent>( []( ecs::SystemBase& sys, ecs::componentWrapper_t& comp ) -> void
-		{
-			if ( std::static_pointer_cast<TagComponent>( comp.data )->tag == entityID_t::PLAYER )
-				sys.DeleteEntity( comp.ownerEntityID );
-		} );
 	}
 
 	uint8_t PlayMainSubState::Run()
 	{
+		float dt = 0.0f;
 		while ( this->returnState == STATE_MENU )
 		{
+			sf::Clock c;
 			this->checkEvents();
-			this->updateECS();
+			this->updateECS( dt );
 			this->draw();
+			dt = c.restart().asSeconds();
 		}
 
 		return returnState;
@@ -51,9 +45,19 @@ namespace pg
 		}
 	}
 
-	void PlayMainSubState::updateECS()
+	void PlayMainSubState::updateECS( float dt )
 	{
-		// ...
+		// Index 0 is Player (for the tests).
+		this->entities[0]->Update();
+		auto velComp = this->entities[0]->GetComponent<VelocityComponent>();
+		auto posComp = this->entities[0]->GetComponent<PositionComponent>();
+		velComp->x += velComp->pendingForce.x;
+		velComp->y += velComp->pendingForce.y;
+		posComp->x += velComp->x * dt;
+		posComp->y += velComp->y * dt;
+		velComp->x = 0.0f;
+		velComp->y = 0.0f;
+		velComp->pendingForce = sf::Vector2f();
 	}
 
 	void PlayMainSubState::draw()

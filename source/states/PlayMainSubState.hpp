@@ -4,10 +4,9 @@
 
 #include "SubState.hpp"
 #include "States.hpp"
-#include "ecs/ECS.hpp"
 #include "resourceManaging/ResourceHolder.hpp"
-#include "components/Tag.hpp"
 #include "subsystems/Renderer.hpp"
+#include "prefabs/Player.hpp"
 
 namespace pg
 {
@@ -30,11 +29,13 @@ namespace pg
 	private:
 		pi::ResourceHolder& resourceCache;
 		ecs::SystemBase& ecsSystem;
+		std::vector<std::shared_ptr<ecs::Entity>> entities;
 		Renderer& renderer;
 		uint8_t returnState;
 
 		void checkEvents();
-		void updateECS();
+		// Temporary variable - dt, only for testing. In future it'll be Physic SubSystem
+		void updateECS( float dt );
 		void draw();
 	};
 }
