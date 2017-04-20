@@ -12,16 +12,19 @@ namespace pg
 	/*
 	===============================================================================
 	Created by: Condzi
-		Velocity Component structure.
+		Velocity Component structure extended by sf::Vector2f.
 
 	===============================================================================
 	*/
-	struct VelocityComponent final
+	struct VelocityComponent final :
+		public sf::Vector2f
 	{
-		float x, y;
+		// Pending Force is added in physic update to velocity.
+		sf::Vector2f pendingForce;
 
-		VelocityComponent( float xx, float yy ) :
-			x( xx ), y( yy )
+		VelocityComponent( const sf::Vector2f& vec = sf::Vector2f( 0.0f, 0.0f ) ) :
+			sf::Vector2f( vec ),
+			pendingForce( 0.0f, 0.0f )
 		{}
 	};
 }
