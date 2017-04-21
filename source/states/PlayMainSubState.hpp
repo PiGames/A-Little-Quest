@@ -10,6 +10,13 @@
 
 namespace pg
 {
+	/*
+	===============================================================================
+	Created by: Condzi
+		Main Play State Sub State - here is everything associated with playing.
+
+	===============================================================================
+	*/
 	class PlayMainSubState final :
 		public pi::SubState
 	{

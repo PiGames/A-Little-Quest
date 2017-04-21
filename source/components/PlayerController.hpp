@@ -18,7 +18,7 @@ namespace pg
 		sf::Keyboard::Key key;
 		sf::Vector2f force;
 
-		movementKey_t( sf::Keyboard::Key k = sf::Keyboard::Key::Unknown, const sf::Vector2f& f = sf::Vector2f( 0.0f, 0.0f ) ) :
+		movementKey_t( sf::Keyboard::Key k = sf::Keyboard::Key::Unknown, const sf::Vector2f& f = sf::Vector2f() ) :
 			key( k ),
 			force( f )
 		{}

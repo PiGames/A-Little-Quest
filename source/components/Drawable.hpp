@@ -19,7 +19,7 @@ namespace pg
 		std::vector<sf::Sprite> sprites;
 		int8_t drawLayer;
 
-		DrawableComponent( int8_t drawL = 0 ) :
+		explicit DrawableComponent( int8_t drawL = 0 ) :
 			drawLayer( drawL )
 		{}
 	};

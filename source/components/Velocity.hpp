@@ -22,7 +22,7 @@ namespace pg
 		// Pending Force is added in physic update to velocity.
 		sf::Vector2f pendingForce;
 
-		VelocityComponent( const sf::Vector2f& vec = sf::Vector2f( 0.0f, 0.0f ) ) :
+		VelocityComponent( const sf::Vector2f& vec = sf::Vector2f() ) :
 			sf::Vector2f( vec ),
 			pendingForce( 0.0f, 0.0f )
 		{}
