@@ -2,9 +2,10 @@
 
 namespace pg
 {
-	void CollisionDetection::Detection()
+	void CollisionDetection::Update()
 	{
 		std::vector<std::shared_ptr<DrawableComponent>> drawables;
+		dt++;
 
 		for (ecs::internal::componentBlock_t& block : this->collisionBlocks)
 			for (auto& wrapper : block.data)
@@ -12,9 +13,19 @@ namespace pg
 					drawables.push_back(std::static_pointer_cast<DrawableComponent>(wrapper.data));
 
 		for (auto drawable : drawables)
-			for (auto sprite : drawable->sprites)
-				for (auto spriteToCompare : drawable->sprites)
-					sprite.getGlobalBounds().contains(spriteToCompare.getGlobalBounds());
-						
+		{
+			for (auto& sprite : drawable->sprites)
+			{
+				for (auto& spriteToCompare : drawable->sprites)
+				{
+					if (!sprite.getGlobalBounds().intersects(spriteToCompare.getGlobalBounds()))
+					{
+						sf::FloatRect& objectA = sprite.getGlobalBounds();
+						sf::FloatRect& objectB = spriteToCompare.getGlobalBounds();
+
+					}
+				}
+			}
+		}
 	}
 }

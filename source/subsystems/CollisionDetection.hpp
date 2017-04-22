@@ -1,24 +1,34 @@
 #pragma once
 
+#include <functional>
 #include "components/Drawable.hpp"
 #include "ecs/ComponentBlock.hpp"
-#include "logger/Logger.hpp"
-#include "map/MapManager.hpp"
+
 
 namespace pg
 {
+	enum direction_t
+	{
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT
+	};
+
 	class CollisionDetection final
 	{
 	public:
 
-		CollisionDetection() = default;
-		~CollisionDetection() = default;
-
-		void Detection();
+		void Update();
 
 		void SetComponentBlocks(std::vector<std::reference_wrapper<ecs::internal::componentBlock_t>>& components)
 		{
 			this->collisionBlocks = components;
+		}
+
+		void SetReactionOnCollision(std::function<void(direction_t)> function)
+		{
+			this->reaction = function;
 		}
 
 		void ClearData()
@@ -27,6 +37,8 @@ namespace pg
 		}
 
 	private:
+		std::function<void(direction_t)> reaction;
 		std::vector<std::reference_wrapper<ecs::internal::componentBlock_t>> collisionBlocks;
+		float dt;
 	};
 }
