@@ -11,7 +11,11 @@ namespace pg
 
 	===============================================================================
 	*/
-	struct PositionComponent final : 
+	struct PositionComponent final :
 		public sf::Vector2f
-	{};
+	{
+		PositionComponent( const sf::Vector2f& vec = sf::Vector2f() ) :
+			sf::Vector2f( vec )
+		{}
+	};
 }

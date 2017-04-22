@@ -11,7 +11,11 @@ namespace pg
 
 	===============================================================================
 	*/
-	struct ColliderComponent final : 
+	struct ColliderComponent final :
 		public sf::FloatRect
-	{};
+	{
+		ColliderComponent( const sf::FloatRect rect = sf::FloatRect() ) :
+			sf::FloatRect( rect )
+		{}
+	};
 }
