@@ -2,7 +2,7 @@
 
 #include <functional>
 #include <cmath>
-#include "components/Drawable.hpp"
+#include "components/Collider.hpp"
 #include "ecs/ComponentBlock.hpp"
 #include "ecs/SystemBase.hpp"
 
@@ -24,7 +24,7 @@ namespace pg
 			sBase(base)
 		{}
 
-		void Update();
+		void Update(float);
 
 		// Set objects
 		void SetComponentBlocks(std::vector<std::reference_wrapper<ecs::internal::componentBlock_t>>& components)
@@ -39,7 +39,7 @@ namespace pg
 		}
 
 		// Set objects velocity
-		void SetVelocity(float velocity)
+		void SetVelocity(const sf::Vector2f& velocity)
 		{
 			this->velocity = velocity;
 		}
@@ -54,6 +54,7 @@ namespace pg
 		std::shared_ptr<ecs::SystemBase> sBase;
 		std::function<void(collidedDirection_t)> reaction;
 		std::vector<std::reference_wrapper<ecs::internal::componentBlock_t>> collisionBlocks;
-		float velocity, dt;
+		sf::Vector2f velocity;
+		float dt;
 	};
 }
