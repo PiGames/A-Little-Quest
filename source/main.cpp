@@ -3,7 +3,7 @@
 #include "map/MapManager.hpp"
 #include "map/WorldConstructor.hpp"
 
-#include "states/PlayState.hpp"
+#include "states/play/PlayState.hpp"
 #include "states/Game.hpp"
 
 int main()
