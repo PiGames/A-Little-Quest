@@ -5,7 +5,12 @@ namespace pg
 	void CollisionDetection::Update()
 	{
 		std::vector<std::shared_ptr<DrawableComponent>> drawables;
-		dt++;
+
+		// Max float range
+		if (dt < 34.f * pow(10, 37))
+			dt++;
+		else
+			dt = 0;
 
 		for (ecs::internal::componentBlock_t& block : this->collisionBlocks)
 			for (auto& wrapper : block.data)
@@ -23,7 +28,16 @@ namespace pg
 						sf::FloatRect& objectA = sprite.getGlobalBounds();
 						sf::FloatRect& objectB = spriteToCompare.getGlobalBounds();
 
-					}
+						// float velocity = dynamic_cast<float>(*sBase->GetComponent<uint32_t>(this->collisionBlocks[0].get().GetFreeComponentWrapper()->ownerEntityID).data);
+
+						if (objectA.top >= objectB.top + objectB.height && objectA.top <= objectB.top + objectB.height)
+							reaction(collidedDirection_t::TOP);
+						else if (objectA.top + objectA.height <= objectB.top && objectA.top + objectA.height >= objectB.top)
+							reaction(collidedDirection_t::BOTTOM);
+						else if(objectA.left + objectA.width <= objectB.left && objectA.left + objectA.width >= objectB.left)
+							reaction(collidedDirection_t::LEFT);
+						else if (objectA.left >= objectB.left + objectB.width && objectA.left <= objectB.left + objectB.width)
+							reaction(collidedDirection_t::RIGHT);
 				}
 			}
 		}

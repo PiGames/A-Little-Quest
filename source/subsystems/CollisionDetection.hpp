@@ -1,16 +1,17 @@
 #pragma once
 
 #include <functional>
+#include <cmath>
 #include "components/Drawable.hpp"
 #include "ecs/ComponentBlock.hpp"
-
+#include "ecs/SystemBase.hpp"
 
 namespace pg
 {
-	enum direction_t
+	enum collidedDirection_t
 	{
-		UP,
-		DOWN,
+		TOP,
+		BOTTOM,
 		LEFT,
 		RIGHT
 	};
@@ -19,26 +20,40 @@ namespace pg
 	{
 	public:
 
+		CollisionDetection(std::shared_ptr<ecs::SystemBase> base) :
+			sBase(base)
+		{}
+
 		void Update();
 
+		// Set objects
 		void SetComponentBlocks(std::vector<std::reference_wrapper<ecs::internal::componentBlock_t>>& components)
 		{
 			this->collisionBlocks = components;
 		}
 
-		void SetReactionOnCollision(std::function<void(direction_t)> function)
+		// Set function for reaction
+		void SetReactionOnCollision(std::function<void(collidedDirection_t)> function)
 		{
 			this->reaction = function;
 		}
 
+		// Set objects velocity
+		void SetVelocity(float velocity)
+		{
+			this->velocity = velocity;
+		}
+
+		// Clear collisionBlocks vector
 		void ClearData()
 		{
 			this->collisionBlocks.clear();
 		}
 
 	private:
-		std::function<void(direction_t)> reaction;
+		std::shared_ptr<ecs::SystemBase> sBase;
+		std::function<void(collidedDirection_t)> reaction;
 		std::vector<std::reference_wrapper<ecs::internal::componentBlock_t>> collisionBlocks;
-		float dt;
+		float velocity, dt;
 	};
 }
