@@ -3,6 +3,7 @@
 #include <functional>
 #include <cmath>
 #include "components/Collider.hpp"
+#include "components/Velocity.hpp"
 #include "ecs/ComponentBlock.hpp"
 #include "ecs/SystemBase.hpp"
 
@@ -21,7 +22,7 @@ namespace pg
 	public:
 
 		CollisionDetection(std::shared_ptr<ecs::SystemBase> base) :
-			sBase(base)
+			systemBase(base)
 		{}
 
 		void Update(float);
@@ -33,28 +34,22 @@ namespace pg
 		}
 
 		// Set function for reaction
-		void SetReactionOnCollision(std::function<void(collidedDirection_t)> function)
+		void SetReactionOnCollision(std::vector <std::function<void(std::shared_ptr<ColliderComponent>, collidedDirection_t, std::shared_ptr<ecs::SystemBase>)>> functions)
 		{
-			this->reaction = function;
+			this->reactions = functions;
 		}
 
-		// Set objects velocity
-		void SetVelocity(const sf::Vector2f& velocity)
-		{
-			this->velocity = velocity;
-		}
-
-		// Clear collisionBlocks vector
+		// Clear collisionBlocks vector and reactions vector
 		void ClearData()
 		{
 			this->collisionBlocks.clear();
+			this->reactions.clear();
 		}
 
 	private:
-		std::shared_ptr<ecs::SystemBase> sBase;
-		std::function<void(collidedDirection_t)> reaction;
+		std::shared_ptr<ecs::SystemBase> systemBase;
+		std::vector <std::function<void(std::shared_ptr<ColliderComponent>, collidedDirection_t, std::shared_ptr<ecs::SystemBase>)>> reactions;
 		std::vector<std::reference_wrapper<ecs::internal::componentBlock_t>> collisionBlocks;
-		sf::Vector2f velocity;
 		float dt;
 	};
 }

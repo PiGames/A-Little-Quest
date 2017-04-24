@@ -4,37 +4,47 @@ namespace pg
 {
 	void CollisionDetection::Update(float time)
 	{
-		std::vector<std::shared_ptr<ColliderComponent>> colliders;
+		std::vector<std::pair<std::shared_ptr<VelocityComponent>, std::shared_ptr<ColliderComponent>>> colliders;
 
 		// Max float range
 		if (dt < 34.f * static_cast<float>(pow(10, 37)))
 			dt++;
 		else
-			dt = 0;
+			dt = 0.f;
 
 		for (ecs::internal::componentBlock_t& block : this->collisionBlocks)
+		{
 			for (auto& wrapper : block.data)
+			{
 				if (wrapper.ownerEntityID != ecs::UNASSIGNED_ENTITY_ID)
-					colliders.push_back(std::static_pointer_cast<ColliderComponent>(wrapper.data));
+				{
+					std::pair<std::shared_ptr<VelocityComponent>, std::shared_ptr<ColliderComponent>> coll;
+					coll.first = std::static_pointer_cast<VelocityComponent>(this->systemBase->GetComponent<VelocityComponent>(wrapper.ownerEntityID).data);
+					if (!coll.first) coll.first = std::make_shared<sf::Vector2f>(0.0f, 0.0f);
+					coll.second = std::static_pointer_cast<ColliderComponent>(wrapper.data);
 
-		for (auto& objectA : colliders)
+					colliders.push_back(coll);
+				}
+			}
+		}
+
+		for (unsigned i = 0; i>colliders.size(); ++i)
 		{
 			for (auto& objectB : colliders)
 			{
-				// velocity = dynamic_cast<sf::Vector2f>(*sBase->GetComponent<uint32_t>(this->collisionBlocks[0].get().GetFreeComponentWrapper()->ownerEntityID).data);
+				VelocityComponent& velocity = *colliders[i].first;
+				sf::FloatRect objectUpdate = *colliders[i].second;
+				objectUpdate.left += velocity.x * time;
+				objectUpdate.top += velocity.y * time;
 
-				sf::FloatRect objectUpdate = *objectA;
-				objectUpdate.left += this->velocity.x * time;
-				objectUpdate.top += this->velocity.y * time;
-
-				if (objectA->top >= objectB->top + objectB->height && objectUpdate.top <= objectB->top + objectB->height)
-					reaction(collidedDirection_t::TOP);
-				else if (objectA->top + objectA->height <= objectB->top && objectUpdate.top + objectUpdate.height >= objectB->top)
-					reaction(collidedDirection_t::BOTTOM);
-				else if(objectA->left + objectA->width <= objectB->left && objectUpdate.left + objectUpdate.width >= objectB->left)
-					reaction(collidedDirection_t::LEFT);
-				else if (objectA->left >= objectB->left + objectB->width && objectUpdate.left <= objectB->left + objectB->width)
-					reaction(collidedDirection_t::RIGHT);
+				if (colliders[i].second->top >= objectB.second->top + objectB.second->height && objectUpdate.top <= objectB.second->top + objectB.second->height)
+					reactions[i](objectB.second, collidedDirection_t::TOP, systemBase);
+				else if (colliders[i].second->top + colliders[i].second->height <= objectB.second->top && objectUpdate.top + objectUpdate.height >= objectB.second->top)
+					reactions[i](objectB.second, collidedDirection_t::BOTTOM, systemBase);
+				else if(colliders[i].second->left + colliders[i].second->width <= objectB.second->left && objectUpdate.left + objectUpdate.width >= objectB.second->left)
+					reactions[i](objectB.second, collidedDirection_t::LEFT, systemBase);
+				else if (colliders[i].second->left >= objectB.second->left + objectB.second->width && objectUpdate.left <= objectB.second->left + objectB.second->width)
+					reactions[i](objectB.second, collidedDirection_t::RIGHT, systemBase);
 			}
 		}
 	}
