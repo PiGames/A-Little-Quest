@@ -2,8 +2,8 @@
 
 #include <SFML/Window/Event.hpp>
 
-#include "SubState.hpp"
-#include "States.hpp"
+#include "states/base/SubState.hpp"
+#include "states/States.hpp"
 #include "resourceManaging/ResourceHolder.hpp"
 #include "subsystems/Renderer.hpp"
 #include "prefabs/Player.hpp"

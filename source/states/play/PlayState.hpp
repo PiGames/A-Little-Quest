@@ -1,7 +1,7 @@
 #pragma once
 
-#include "State.hpp"
-#include "States.hpp"
+#include "states/base/State.hpp"
+#include "states/States.hpp"
 #include "ecs/ECS.hpp"
 #include "resourceManaging/ResourceHolder.hpp"
 #include "subsystems/Renderer.hpp"

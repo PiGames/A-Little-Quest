@@ -16,7 +16,7 @@ namespace pg
 		*position = sf::Vector2f( 0.0f, 0.0f );
 		*velocity = sf::Vector2f( 0.0f, 0.0f );
 
-		tag->tag = entityID_t::PLAYER;
+		*tag = entityID_t::PLAYER;
 	}
 
 	void Player::Update()
