@@ -43,22 +43,14 @@ namespace pg
 			this->collisionBlocks = components;
 		}
 
-		// Set function for reaction
-		void SetReactionOnCollision( std::vector <std::function<void( std::shared_ptr<ColliderComponent>, collidedDirection_t, std::shared_ptr<ecs::SystemBase> )>> functions )
-		{
-			this->reactions = functions;
-		}
-
 		// Clear collisionBlocks vector and reactions vector
 		void ClearData()
 		{
 			this->collisionBlocks.clear();
-			this->reactions.clear();
 		}
 
 	private:
 		std::shared_ptr<ecs::SystemBase> systemBase;
-		std::vector <std::function<void( std::shared_ptr<ColliderComponent>, collidedDirection_t, std::shared_ptr<ecs::SystemBase> )>> reactions;
 		std::vector<std::reference_wrapper<ecs::internal::componentBlock_t>> collisionBlocks;
 
 		std::vector<std::pair<std::shared_ptr<VelocityComponent>, std::shared_ptr<ColliderComponent>>> getColliders();

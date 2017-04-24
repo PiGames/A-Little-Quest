@@ -7,26 +7,27 @@ namespace pg
 		std::vector<std::pair<std::shared_ptr<VelocityComponent>, std::shared_ptr<ColliderComponent>>> colliders;
 		colliders = this->getColliders();
 
-		for ( unsigned i = 0; i > colliders.size(); i++ )
+		for ( auto& objectA : colliders)
 		{
 			for ( auto& objectB : colliders )
 			{
-				VelocityComponent& velocity = *colliders[i].first;
-				sf::FloatRect objectUpdate = *colliders[i].second;
+				VelocityComponent& velocity = *objectA.first;
+				sf::FloatRect objectUpdate = *objectA.second;
 				objectUpdate.left += velocity.x * dt;
 				objectUpdate.top += velocity.y * dt;
 				collidedDirection_t direction = COLLISION_NONE;
 
-				if ( colliders[i].second->top >= objectB.second->top + objectB.second->height && objectUpdate.top <= objectB.second->top + objectB.second->height )
+				if ( objectA.second->top >= objectB.second->top + objectB.second->height && objectUpdate.top <= objectB.second->top + objectB.second->height )
 					direction = COLLISION_TOP;
-				else if ( colliders[i].second->top + colliders[i].second->height <= objectB.second->top && objectUpdate.top + objectUpdate.height >= objectB.second->top )
+				else if ( objectA.second->top + objectA.second->height <= objectB.second->top && objectUpdate.top + objectUpdate.height >= objectB.second->top )
 					direction = COLISION_BOTTOM;
-				else if ( colliders[i].second->left + colliders[i].second->width <= objectB.second->left && objectUpdate.left + objectUpdate.width >= objectB.second->left )
+				else if ( objectA.second->left + objectA.second->width <= objectB.second->left && objectUpdate.left + objectUpdate.width >= objectB.second->left )
 					direction = COLLISION_LEFT;
-				else if ( colliders[i].second->left >= objectB.second->left + objectB.second->width && objectUpdate.left <= objectB.second->left + objectB.second->width )
+				else if ( objectA.second->left >= objectB.second->left + objectB.second->width && objectUpdate.left <= objectB.second->left + objectB.second->width )
 					direction = COLLISION_RIGHT;
 
-				reactions[i]( objectB.second, direction, systemBase );
+				objectA.second->callback( *objectB.second, direction, *systemBase );
+				objectB.second->callback( *objectA.second, direction, *systemBase );
 			}
 		}
 	}
