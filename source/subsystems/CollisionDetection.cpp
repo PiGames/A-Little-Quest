@@ -5,28 +5,7 @@ namespace pg
 	void CollisionDetection::Update( float dt )
 	{
 		std::vector<std::pair<std::shared_ptr<VelocityComponent>, std::shared_ptr<ColliderComponent>>> colliders;
-
-		// Max float range
-		if ( dt < 34.f * static_cast<float>( pow( 10, 37 ) ) )
-			dt++;
-		else
-			dt = 0.f;
-
-		for ( ecs::internal::componentBlock_t& block : this->collisionBlocks )
-		{
-			for ( auto& wrapper : block.data )
-			{
-				if ( wrapper.ownerEntityID != ecs::UNASSIGNED_ENTITY_ID )
-				{
-					std::pair<std::shared_ptr<VelocityComponent>, std::shared_ptr<ColliderComponent>> coll;
-					coll.first = std::static_pointer_cast<VelocityComponent>( this->systemBase->GetComponent<VelocityComponent>( wrapper.ownerEntityID ).data );
-					if ( !coll.first ) coll.first = std::make_shared<VelocityComponent>( VelocityComponent( { 0.0f, 0.0f } ) );
-					coll.second = std::static_pointer_cast<ColliderComponent>( wrapper.data );
-
-					colliders.push_back( coll );
-				}
-			}
-		}
+		colliders = this->getColliders();
 
 		for ( unsigned i = 0; i > colliders.size(); i++ )
 		{
@@ -50,5 +29,26 @@ namespace pg
 				reactions[i]( objectB.second, direction, systemBase );
 			}
 		}
+	}
+
+	std::vector<std::pair<std::shared_ptr<VelocityComponent>, std::shared_ptr<ColliderComponent>>> CollisionDetection::getColliders()
+	{
+		std::vector<std::pair<std::shared_ptr<VelocityComponent>, std::shared_ptr<ColliderComponent>>> colliders;
+		for (ecs::internal::componentBlock_t& block : this->collisionBlocks)
+		{
+			for (auto& wrapper : block.data)
+			{
+				if (wrapper.ownerEntityID != ecs::UNASSIGNED_ENTITY_ID)
+				{
+					std::pair<std::shared_ptr<VelocityComponent>, std::shared_ptr<ColliderComponent>> coll;
+					coll.first = std::static_pointer_cast<VelocityComponent>(this->systemBase->GetComponent<VelocityComponent>(wrapper.ownerEntityID).data);
+					if (!coll.first) coll.first = std::make_shared<VelocityComponent>(VelocityComponent({ 0.0f, 0.0f }));
+					coll.second = std::static_pointer_cast<ColliderComponent>(wrapper.data);
+
+					colliders.push_back(coll);
+				}
+			}
+		}
+		return colliders;
 	}
 }

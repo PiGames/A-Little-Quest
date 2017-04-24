@@ -22,7 +22,8 @@ namespace pg
 	/*
 	===============================================================================
 	Created by: Uriel
-		Description...
+		CollisionDetection is class where you can set coponenty blocks to chechked
+		for collision event.
 
 	===============================================================================
 	*/
@@ -59,6 +60,7 @@ namespace pg
 		std::shared_ptr<ecs::SystemBase> systemBase;
 		std::vector <std::function<void( std::shared_ptr<ColliderComponent>, collidedDirection_t, std::shared_ptr<ecs::SystemBase> )>> reactions;
 		std::vector<std::reference_wrapper<ecs::internal::componentBlock_t>> collisionBlocks;
-		float dt;
+
+		std::vector<std::pair<std::shared_ptr<VelocityComponent>, std::shared_ptr<ColliderComponent>>> getColliders();
 	};
 }
