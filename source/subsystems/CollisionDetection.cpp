@@ -36,16 +36,16 @@ namespace pg
 				sf::FloatRect objectUpdate = *colliders[i].second;
 				objectUpdate.left += velocity.x * dt;
 				objectUpdate.top += velocity.y * dt;
-				collidedDirection_t direction = NONE;
+				collidedDirection_t direction = COLLISION_NONE;
 
 				if ( colliders[i].second->top >= objectB.second->top + objectB.second->height && objectUpdate.top <= objectB.second->top + objectB.second->height )
-					direction = TOP;
+					direction = COLLISION_TOP;
 				else if ( colliders[i].second->top + colliders[i].second->height <= objectB.second->top && objectUpdate.top + objectUpdate.height >= objectB.second->top )
-					direction = BOTTOM;
+					direction = COLISION_BOTTOM;
 				else if ( colliders[i].second->left + colliders[i].second->width <= objectB.second->left && objectUpdate.left + objectUpdate.width >= objectB.second->left )
-					direction = LEFT;
+					direction = COLLISION_LEFT;
 				else if ( colliders[i].second->left >= objectB.second->left + objectB.second->width && objectUpdate.left <= objectB.second->left + objectB.second->width )
-					direction = RIGHT;
+					direction = COLLISION_RIGHT;
 
 				reactions[i]( objectB.second, direction, systemBase );
 			}
