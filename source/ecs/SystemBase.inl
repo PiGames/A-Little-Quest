@@ -36,7 +36,7 @@ inline std::shared_ptr<std::vector<std::reference_wrapper<internal::componentBlo
 template<class ComponentType>
 inline componentWrapper_t SystemBase::GetComponent( entityID_t entity )
 {
-	if ( entity == UNASSIGNED_ENTITY_ID || !this->isEntityInSystem( entity ) )
+	if ( entity == UNASSIGNED_ENTITY_ID || !this->IsEntityInSystem( entity ) )
 		return componentWrapper_t( 0 );
 	size_t componentHashCode = typeid( ComponentType ).hash_code();
 
@@ -62,8 +62,7 @@ inline bool SystemBase::HasComponent( entityID_t entity )
 template<class ComponentType, typename ...Args>
 inline void SystemBase::ForEach( std::function<void( SystemBase&, componentWrapper_t&, Args... )>& func, Args&&... args )
 {
-	if ( !func )
-		return;
+	ECS_ASSERT( func, "For Each function is not assigned" );
 
 	size_t componentHashCode = typeid( ComponentType ).hash_code();
 	if ( !this->isComponentRegistered( componentHashCode ) )
@@ -102,6 +101,50 @@ inline std::shared_ptr<std::vector<std::reference_wrapper<componentWrapper_t>>> 
 		}
 
 	return vec;
+}
+
+template<class ComponentType>
+inline std::shared_ptr<std::vector<entityID_t>> SystemBase::GetAllEntitiesWithComponentOfType()
+{
+	size_t componentHashCode = typeid( ComponentType ).hash_code();
+	if ( !this->isComponentRegistered( componentHashCode ) )
+		return nullptr;
+
+	auto vec = std::make_shared<std::vector<entityID_t>>();
+	for ( auto& componentBlock : this->componentsBlocks )
+		if ( componentBlock.hashCode == componentHashCode )
+			for ( auto& component : componentBlock.data )
+				if ( component.ownerEntityID != UNASSIGNED_ENTITY_ID )
+					vec->push_back( component.ownerEntityID );
+
+	return vec;
+}
+
+template<class ComponentType, typename ...Args>
+inline std::shared_ptr<std::vector<entityID_t>> SystemBase::GetAllEntitiesWithComponentOfTypeThatFulfilFunction( std::function<bool( ComponentType&, Args... )> func, Args&&... args )
+{
+	size_t componentHashCode = typeid( ComponentType ).hash_code();
+	if ( !this->isComponentRegistered( componentHashCode ) )
+		return nullptr;
+
+	ECS_ASSERT( func, "Expression function is not assigned" );
+
+	auto vec = std::make_shared<std::vector<entityID_t>>();
+	for ( auto& componentBlock : this->componentsBlocks )
+		if ( componentBlock.hashCode == componentHashCode )
+			for ( auto& component : componentBlock.data )
+				if ( component.ownerEntityID != UNASSIGNED_ENTITY_ID )
+					if ( func( *std::static_pointer_cast<ComponentType>( component.data ), std::forward<Args>( args )... ) )
+						vec->push_back( component.ownerEntityID );
+
+	return vec;
+}
+
+template<class ComponentType, typename Lambda, typename ...Args>
+inline std::shared_ptr<std::vector<entityID_t>> SystemBase::GetAllEntitiesWithComponentOfTypeThatFulfilLambda( Lambda func, Args&&... args )
+{
+	std::function<bool( ComponentType&, Args... )> function = func;
+	return this->GetAllEntitiesWithComponentOfTypeThatFulfilFunction( function, args... );
 }
 
 template<class ComponentType>

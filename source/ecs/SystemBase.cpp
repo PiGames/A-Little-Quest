@@ -16,7 +16,7 @@ namespace ecs
 
 	bool SystemBase::DeleteEntity( entityID_t entity )
 	{
-		if ( entity == UNASSIGNED_ENTITY_ID || !this->isEntityInSystem( entity ) )
+		if ( entity == UNASSIGNED_ENTITY_ID || !this->IsEntityInSystem( entity ) )
 			return false;
 
 		for ( auto& block : this->componentsBlocks )
@@ -41,7 +41,7 @@ namespace ecs
 
 	bool SystemBase::SetEntityWishDelete( entityID_t entity, bool val )
 	{
-		if ( entity == UNASSIGNED_ENTITY_ID || !this->isEntityInSystem( entity ) )
+		if ( entity == UNASSIGNED_ENTITY_ID || !this->IsEntityInSystem( entity ) )
 			return false;
 
 		for ( auto it = this->entitiesAttributes.begin(); it != entitiesAttributes.end(); it++ )
@@ -53,6 +53,34 @@ namespace ecs
 
 		ECS_ASSERT( false, "Cannot find Entity in entitiesAttributes vector for unknow reason" );
 		return false;
+	}
+
+	bool SystemBase::IsEntityInSystem( entityID_t id )
+	{
+		if ( id == UNASSIGNED_ENTITY_ID )
+			return false;
+
+		for ( const auto& attrib : this->entitiesAttributes )
+			if ( attrib.entityID == id )
+				return true;
+
+		return false;
+	}
+
+	std::shared_ptr<std::vector<std::reference_wrapper<componentWrapper_t>>> SystemBase::GetAllEntityComponents( entityID_t entity )
+	{
+		auto vec = std::make_shared<std::vector<std::reference_wrapper<componentWrapper_t>>>();
+
+		for ( auto& componentBlock : this->componentsBlocks )
+			for ( auto& component : componentBlock.data )
+				if ( component.ownerEntityID == entity )
+				{
+					vec->push_back( component );
+					// There is only one component of type X per one Entity
+					break;
+				}
+
+		return vec;
 	}
 
 	void SystemBase::ClearAll()
@@ -131,7 +159,7 @@ namespace ecs
 				// Checking if entity already has this component
 				for ( const auto& component : compblock.data )
 					if ( component.ownerEntityID == entity )
-							return componentWrapper_t( 0 );
+						return componentWrapper_t( 0 );
 
 				if ( compblock.HasFreeSpace() )
 					freeComponentWrapper = compblock.GetFreeComponentWrapper();
@@ -144,12 +172,22 @@ namespace ecs
 		return *freeComponentWrapper;
 	}
 
-	bool SystemBase::isEntityInSystem( entityID_t id )
+	bool HaveSameComponentTypes( entityID_t first, entityID_t second, SystemBase& system )
 	{
-		for ( const auto& attrib : this->entitiesAttributes )
-			if ( attrib.entityID == id )
-				return true;
+		auto firstComponents = system.GetAllEntityComponents( first );
+		auto secondComponents = system.GetAllEntityComponents( second );
+		std::vector<size_t> firstHashCodes;
+		std::vector<size_t> secondHashCodes;
 
-		return false;
+		for ( componentWrapper_t& component : *firstComponents )
+			firstHashCodes.push_back( component.hashCode );
+		for ( componentWrapper_t& component : *secondComponents )
+			secondHashCodes.push_back( component.hashCode );
+
+		for ( auto hash : firstHashCodes )
+			if ( std::find( secondHashCodes.begin(), secondHashCodes.end(), hash ) == secondHashCodes.end() )
+				return false;
+
+		return true;
 	}
 }
