@@ -6,10 +6,10 @@
 #include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Audio/Sound.hpp>
 
-#include "MV/config/Config.hpp"
-#include "MV/logger/Logger.hpp"
+#include "logger/Logger.hpp"
+#include "Config.hpp"
 
-namespace mv
+namespace pi
 {
 	//SoundObject class
 	//It is designed to administer short sounds
