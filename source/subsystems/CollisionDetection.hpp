@@ -31,7 +31,7 @@ namespace pg
 	{
 	public:
 
-		CollisionDetection( std::shared_ptr<ecs::SystemBase> base ) :
+		CollisionDetection( ecs::SystemBase* base ) :
 			systemBase( base )
 		{}
 
