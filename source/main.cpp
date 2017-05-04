@@ -11,7 +11,7 @@ int main()
 	pi::MapManager::CreateInstance( sf::Vector2i( 5, 5 ) );
 	{
 		pi::WorldConstructor worldConstructor;
-		worldConstructor.CreateWorld( sf::Vector2i( 5, 5 ), 0 );
+		worldConstructor.CreateWorld( 0 );
 	}
 
 	pg::Game game("settings.ini", pg::STATE_PLAY);

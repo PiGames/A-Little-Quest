@@ -14,6 +14,6 @@ namespace pi
 	{
 	public:
 		//Creates world 
-		void CreateWorld( const sf::Vector2i& unitWorldSize, int mapNumber );
+		void CreateWorld( int mapNumber );
 	};
 }
