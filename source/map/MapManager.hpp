@@ -4,27 +4,27 @@
 
 #include "Cell.hpp"
 #include "logger/Logger.hpp"
+#include "WorldConstructor.hpp"
 
 namespace pi
 {
 	class MapManager
 	{
 	public:
-		static MapManager& GetInstance();
-
-		static void CreateInstance( sf::Vector2i uWorldSize );
-
 		//Returns world size in units
-		sf::Vector2i GetUnitWorldSize();
+		sf::Vector2i GetUnitWorldSize() const;
+
+		void createWorld( int mapNumber );
 
 		//Checks that object with given position is in map
-		bool IsInMap( sf::Vector2i& unitPosition );
+		bool IsInMap( sf::Vector2i& unitPosition ) const;
 
 		//Checks that object with given position is in map
-		bool IsInMap( unsigned int i, unsigned int j );
+		bool IsInMap( unsigned int i, unsigned int j ) const;
 
 		//Adds new cell
 		void addCell( int id, sf::Vector2i unitPosition );
+
 		// Returns reference to map cells
 		std::vector<Cell>& GetCells()
 		{
@@ -36,16 +36,9 @@ namespace pi
 		std::vector<Cell> map;
 
 		//World size in units
-		sf::Vector2i unitWorldSize { 0,0 };
+		sf::Vector2i unitWorldSize{ 0,0 };
 
 		//Dimensions of cell(in px)
-		sf::Vector2f cellDimensions { 0,0 };
-
-		static MapManager* instance;
-
-		MapManager( sf::Vector2i uWorldSize );
-		MapManager() = delete;  // Not Implemented
-		MapManager( MapManager const& copy ) = delete;            // Not Implemented
-		MapManager& operator=( MapManager const& copy ) = delete; // Not Implemented
+		sf::Vector2f cellDimensions{ 0,0 };
 	};
 }

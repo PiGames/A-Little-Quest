@@ -15,7 +15,7 @@ namespace pg
 	===============================================================================
 	Created by: Condzi
 		Renderer uses a component blocks of DrawableCompoents. You should get them
-		using Reserve method in ecs::SystemBase. Pass them directly here. Before 
+		using Reserve method in ecs::SystemBase. Pass them directly here. Before
 		rendering make sure that you passed map texture.
 
 	===============================================================================
@@ -38,13 +38,14 @@ namespace pg
 			this->mapTextureSheet = texture;
 		}
 
-		void GenerateMapTexture();
-		void ClearWindow( sf::Color clearColor = sf::Color::Black ) 
-		{ 
-			this->window.clear( clearColor ); 
+		void GenerateMapTexture( pi::MapManager& mapManager );
+
+		void ClearWindow( sf::Color clearColor = sf::Color::Black ) const
+		{
+			this->window.clear( clearColor );
 		}
 		void Render();
-		void Display()
+		void Display() const
 		{
 			this->window.display();
 		}

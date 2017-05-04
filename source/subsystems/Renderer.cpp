@@ -2,15 +2,15 @@
 
 namespace pg
 {
-	void Renderer::GenerateMapTexture()
+	void Renderer::GenerateMapTexture( pi::MapManager& mapManager )
 	{
-		auto& mapCells = pi::MapManager::GetInstance().GetCells();
+		auto& mapCells = mapManager.GetCells();
 
 		this->finalMapTexture.clear();
 		this->finalMapTexture.create
 		(
-			pi::MapManager::GetInstance().GetUnitWorldSize().x * constants::cell::CELL_DIMENSIONS.x,
-			pi::MapManager::GetInstance().GetUnitWorldSize().y * constants::cell::CELL_DIMENSIONS.y
+			mapManager.GetUnitWorldSize().x * constants::cell::CELL_DIMENSIONS.x,
+			mapManager.GetUnitWorldSize().y * constants::cell::CELL_DIMENSIONS.y
 		);
 		for ( auto& cell : mapCells )
 		{

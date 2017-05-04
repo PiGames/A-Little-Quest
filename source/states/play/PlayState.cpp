@@ -6,10 +6,12 @@ namespace pg
 	{
 		this->StartThread();
 
+		this->mapManager.createWorld( 0 );
+
 		this->loadTextures();
 		this->renderer.SetComponentBlocks( *this->ecsSystem.ReserveComponentBlocks<DrawableComponent>( 8 ) );
 		this->renderer.SetMapTextureSheet( this->resourceCache.GetTexture( 1 ) );
-		this->renderer.GenerateMapTexture();
+		this->renderer.GenerateMapTexture( mapManager );
 
 		this->addSubState<PlayMainSubState>( SUB_STATE_PLAY_MAIN, this->window, this->resourceCache, this->ecsSystem, this->renderer );
 		this->EndThread();

@@ -2,27 +2,25 @@
 
 namespace pi
 {
-	void WorldConstructor::CreateWorld( int mapNumber )
+	void WorldConstructor::CreateWorld( int mapNumber, std::vector<Cell>& map, sf::Vector2i& unitWorldSize ) const
 	{
-		std::ifstream input( "data/maps/map" + std::to_string( mapNumber ) +".txt" );
+		std::ifstream input( "data/maps/map" + std::to_string( mapNumber ) + ".txt" );
 
 		if ( !input.good() )
 		{
 			Logger::Log( constants::error::worldConstructor::FAILED_OPEN, Logger::stream_t::BOTH, Logger::type_t::ERROR );
 		}
 
-		sf::Vector2i unitDimensions;
-
-		input >> unitDimensions.x >> unitDimensions.y;
+		input >> unitWorldSize.x >> unitWorldSize.y;
 
 		int tempID;
 
-		for ( int j = 0; j < unitDimensions.y; j++ )
+		for ( int j = 0; j < unitWorldSize.y; j++ )
 		{
-			for ( int i = 0; i < unitDimensions.x; i++ )
+			for ( int i = 0; i < unitWorldSize.x; i++ )
 			{
 				input >> tempID;
-				MapManager::GetInstance().addCell( tempID, sf::Vector2i(i,j));
+				map.emplace_back( tempID, sf::Vector2i( i, j ) );
 			}
 		}
 	}
