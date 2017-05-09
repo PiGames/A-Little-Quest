@@ -11,7 +11,7 @@ namespace pi
 	public:
 		Cell( int identifier, const sf::Vector2i& unitPosition );
 
-		int GetID()
+		int GetID() const
 		{
 			return this->id;
 		}

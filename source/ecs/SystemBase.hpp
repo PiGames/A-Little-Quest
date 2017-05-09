@@ -42,6 +42,7 @@ namespace ecs
 		entityID_t CreateEntity();
 		bool DeleteEntity( entityID_t entity );
 		bool SetEntityWishDelete( entityID_t entity, bool val );
+		bool IsEntityInSystem( entityID_t id );
 
 		// Returns componentWrapper_t with id UNASSIGNED_ENTITY_ID if found same
 		template<class ComponentType>
@@ -69,10 +70,22 @@ namespace ecs
 		// Returns shared pointer to vector of std::reference_rapper<componentWrapper_t> with components types
 		template<class ComponentType>
 		std::shared_ptr<std::vector<std::reference_wrapper<componentWrapper_t>>> GetAllComponentsOfType();
+		template<class ComponentType>
+		std::shared_ptr<std::vector<entityID_t>> GetAllEntitiesWithComponentOfType();
+		// Returns only that components that fulfil following function: std::function<bool(ComponentType&, Args...> 
+		template<class ComponentType, typename ...Args>
+		std::shared_ptr<std::vector<entityID_t>> GetAllEntitiesWithComponentOfTypeThatFulfilFunction( std::function<bool( ComponentType&, Args... )> func, Args&&... args );
+		// Returns only that components that fulfil following lambda: bool (ComponentType&, args...);
+		template<class ComponentType, typename Lambda, typename ...Args>
+		std::shared_ptr<std::vector<entityID_t>> GetAllEntitiesWithComponentOfTypeThatFulfilLambda( Lambda func, Args&&... args );
+		std::shared_ptr<std::vector<std::reference_wrapper<componentWrapper_t>>> GetAllEntityComponents( entityID_t entity );
 
 		void ClearAll();
 		// Removes all entities that wished delete and components id marks as UNINITIALIZED.
 		void RemoveAllThatWishToDelete();
+
+		// Tests if `first` and `second` have same components.
+		friend bool HaveSameComponentTypes( entityID_t first, entityID_t second, SystemBase& system );
 
 	private:
 		std::vector<internal::entityAttributes_t> entitiesAttributes;
@@ -85,7 +98,6 @@ namespace ecs
 		template<class ComponentType>
 		void allocateNewBlock();
 		componentWrapper_t addToBlock( entityID_t entity, size_t componentHashCode );
-		bool isEntityInSystem( entityID_t id );
 	};
 
 #include "SystemBase.inl"

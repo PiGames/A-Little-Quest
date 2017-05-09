@@ -7,6 +7,7 @@
 #include "subsystems/Renderer.hpp"
 #include "components/Drawable.hpp"
 #include "PlayMainSubState.hpp"
+#include "map/MapManager.hpp"
 
 namespace pg
 {
@@ -31,6 +32,7 @@ namespace pg
 		pi::ResourceHolder& resourceCache;
 		ecs::SystemBase& ecsSystem;
 		Renderer renderer;
+		pi::MapManager mapManager;
 	
 		void loadTextures();
 		void freeResources();
