@@ -37,7 +37,7 @@ namespace ui
 
 	private:
 		sf::Texture texture, relaseTexture;
-		std::array <std::function<void( )>, constants::ui::MAX_CALLBACKS> functions;
+		std::array <std::function<void( )>, MAX_CALLBACKS> functions;
 		bool isClicked;
 
 		// VIRTUAL FUNCTIONS START

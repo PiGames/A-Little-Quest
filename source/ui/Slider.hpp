@@ -46,7 +46,7 @@ namespace ui
 		sf::Texture sliderTexture, rateTexture;
 		sf::Sprite rateSprite;
 		sf::Vector2f ratePosition, rateSize, scale;
-		std::array <std::function<void( Slider* )>, constants::ui::MAX_CALLBACKS> functions;
+		std::array <std::function<void( Slider* )>, MAX_CALLBACKS> functions;
 		float realTime, delayTime;
 		bool isSelected, checkingInRealMode;
 

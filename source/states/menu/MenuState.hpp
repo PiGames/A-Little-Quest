@@ -6,6 +6,7 @@
 #include "resourceManaging/ResourceHolder.hpp"
 #include "subsystems/Renderer.hpp"
 #include "components/Drawable.hpp"
+#include "MenuSubState.hpp"
 
 namespace pg
 {

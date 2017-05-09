@@ -60,7 +60,7 @@ namespace ui
 			sf::Text text;
 			sf::Vector2f position;
 		};
-		std::array <std::unique_ptr<listStruct_t>, constants::ui::MAX_UIELEMENTS> list;
+		std::array <std::unique_ptr<listStruct_t>, MAX_UIELEMENTS> list;
 
 		// VIRTUAL FUNCTIONS START
 		void use( sf::Event& ) final;

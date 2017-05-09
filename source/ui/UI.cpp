@@ -50,6 +50,20 @@ namespace ui
 		}
 	}
 
+	void UI::updateButtons()
+	{
+		for (auto &i : this->elements)
+		{
+			if (i)
+			{
+				if (i->type == elementType_t::BUTTON)
+				{
+					i->update( *this->window );
+				}
+			}
+		}
+	}
+
 	// Checkbox methods
 
 	void UI::useCheckboxs( sf::Event& event )
@@ -75,6 +89,20 @@ namespace ui
 				if( i->type == elementType_t::CHECKBOX )
 				{
 					i->update( window );
+				}
+			}
+		}
+	}
+
+	void UI::updateCheckboxs()
+	{
+		for (auto &i : this->elements)
+		{
+			if (i)
+			{
+				if (i->type == elementType_t::CHECKBOX)
+				{
+					i->update( *this->window );
 				}
 			}
 		}
@@ -110,6 +138,20 @@ namespace ui
 		}
 	}
 
+	void UI::updateSliders()
+	{
+		for (auto &i : this->elements)
+		{
+			if (i)
+			{
+				if (i->type == elementType_t::SLIDER)
+				{
+					i->update(*this->window);
+				}
+			}
+		}
+	}
+
 	// List methods
 
 	void UI::useLists( sf::Event& event )
@@ -135,6 +177,20 @@ namespace ui
 				if( i->type == elementType_t::LIST )
 				{
 					i->update( window );
+				}
+			}
+		}
+	}
+
+	void UI::updateLists()
+	{
+		for (auto &i : this->elements)
+		{
+			if (i)
+			{
+				if (i->type == elementType_t::LIST)
+				{
+					i->update(*this->window);
 				}
 			}
 		}
@@ -168,5 +224,42 @@ namespace ui
 				}
 			}
 		}
-	}	
+	}
+	void UI::updateTextbox()
+	{
+		for (auto &i : this->elements)
+		{
+			if (i)
+			{
+				if (i->type == elementType_t::TEXTBOX)
+				{
+					i->update(*this->window);
+				}
+			}
+		}
+	}
+
+	// All section
+
+	void UI::update(sf::RenderWindow& window)
+	{
+		for (auto &i : this->elements)
+		{
+			if (i)
+			{
+				i->update(window);
+			}
+		}
+	}
+
+	void UI::update()
+	{
+		for (auto &i : this->elements)
+		{
+			if (i)
+			{
+				i->update(*this->window);
+			}
+		}
+	}
 }

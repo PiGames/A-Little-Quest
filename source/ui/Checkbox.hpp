@@ -47,8 +47,8 @@ namespace ui
 
 	private:
 		sf::Texture *texture, textureOn, textureOff;
-		std::array <std::function<void( )>, constants::ui::MAX_CALLBACKS> functionsOff;
-		std::array <std::function<void( )>, constants::ui::MAX_CALLBACKS> functionsOn;
+		std::array <std::function<void( )>, MAX_CALLBACKS> functionsOff;
+		std::array <std::function<void( )>, MAX_CALLBACKS> functionsOn;
 		bool isEnable;
 
 		void enable( );

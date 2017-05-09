@@ -51,32 +51,42 @@ namespace ui
 		// Buttons section start
 		void useButtons( sf::Event& );
 		void updateButtons( sf::RenderWindow& );
+		void updateButtons();
 		// Buttons section end
 
 		// Chechbox section start
 		void useCheckboxs( sf::Event& );
 		void updateCheckboxs( sf::RenderWindow& );
+		void updateCheckboxs();
 		// Chechbox section end
 
 		// Slider section start
 		void useSliders( sf::Event& );
 		void updateSliders( sf::RenderWindow& );
+		void updateSliders();
 		// Slider section end
 
 		// List section start
 		void useLists( sf::Event& );
 		void updateLists( sf::RenderWindow& );
+		void updateLists();
 		// List section end
 
 		// Textbox section start
 		void useTextbox(sf::Event&);
 		void updateTextbox(sf::RenderWindow&);
+		void updateTextbox();
 		// Textbox section end
+
+		// All section start
+		void update(sf::RenderWindow&);
+		void update();
+		// All section end
 
 	private:
 		sf::RenderWindow* window;
 		unsigned elementArrayLenght;
 
-		std::array <std::unique_ptr<Element>, constants::ui::MAX_UIELEMENTS * constants::ui::NUMBER_OF_UI_ELEMENTS> elements;
+		std::array <std::unique_ptr<Element>, MAX_UIELEMENTS * NUMBER_OF_UI_ELEMENTS> elements;
 	};
 }
