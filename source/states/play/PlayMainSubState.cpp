@@ -4,13 +4,19 @@ namespace pg
 {
 	void pg::PlayMainSubState::OnStart()
 	{
-		Player player( this->ecsSystem );
-		player.SetUpComponents();
-		auto drawable = player.AddComponent<DrawableComponent>();
+		this->physic.SetColliderComponentBlocks( *this->ecsSystem.ReserveComponentBlocks<ColliderComponent>( 8 ) );
+		this->physic.SetVelocityComponentBlocks( *this->ecsSystem.ReserveComponentBlocks<VelocityComponent>( 8 ) );
+		auto player = std::make_shared<Player>( this->ecsSystem );
+		player->SetUpComponents();
+		auto drawable = player->AddComponent<DrawableComponent>();
 		drawable->drawLayer = LAYER_PLAYER;
 		drawable->sprites.emplace_back();
 		drawable->sprites.back().setTexture( *this->resourceCache.GetTexture( 0 ).lock() );
-		entities.push_back( std::make_shared<Player>( player ) );
+
+		pi::Logger::Log( std::to_string( player->GetID() ) );
+		entities.push_back( player );
+		this->updateECS( 0.0f );
+		player->GetComponent<PositionComponent>()->x = 100.0f;
 	}
 
 	void PlayMainSubState::OnStop()
@@ -24,6 +30,7 @@ namespace pg
 		{
 			sf::Clock c;
 			this->checkEvents();
+			this->physic.Update( dt );
 			this->updateECS( dt );
 			this->draw();
 			dt = c.restart().asSeconds();
@@ -47,17 +54,13 @@ namespace pg
 
 	void PlayMainSubState::updateECS( float dt )
 	{
-		// Index 0 is Player (for the tests).
-		this->entities[0]->Update();
-		auto velComp = this->entities[0]->GetComponent<VelocityComponent>();
-		auto posComp = this->entities[0]->GetComponent<PositionComponent>();
-		velComp->x += velComp->pendingForce.x;
-		velComp->y += velComp->pendingForce.y;
-		posComp->x += velComp->x * dt;
-		posComp->y += velComp->y * dt;
-		velComp->x = 0.0f;
-		velComp->y = 0.0f;
-		velComp->pendingForce = sf::Vector2f();
+		ecs::removeUnusedEntities( this->entities, this->ecsSystem, []( std::shared_ptr<ecs::Entity>& entity ) -> ecs::entityID_t
+		{
+			return entity->GetID();
+		} );
+
+		for ( auto entity : this->entities )
+			entity->Update();
 	}
 
 	void PlayMainSubState::draw()

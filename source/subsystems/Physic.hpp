@@ -62,7 +62,7 @@ namespace pg
 		// Clear collider and velocity vector
 		void ClearData()
 		{
-			this->collider.clear();
+			this->colliderBlocks.clear();
 			this->velocityBlocks.clear();
 		}
 
@@ -70,12 +70,9 @@ namespace pg
 
 	private:
 		ecs::SystemBase& ecsSystem;
-		std::vector<std::reference_wrapper<ecs::internal::componentBlock_t>> collider;
 		std::vector<std::reference_wrapper<ecs::internal::componentBlock_t>> colliderBlocks;
 		std::vector<std::reference_wrapper<ecs::internal::componentBlock_t>> velocityBlocks;
 		std::vector<physicEntity_t> entities;
-
-		std::vector<std::pair<std::shared_ptr<VelocityComponent>, std::shared_ptr<ColliderComponent>>> getColliders();
 
 		void updateCurrentEntitiesStorage();
 		void updateVelocity( float dt );

@@ -7,6 +7,7 @@
 #include "resourceManaging/ResourceHolder.hpp"
 #include "subsystems/Renderer.hpp"
 #include "prefabs/Player.hpp"
+#include "subsystems/Physic.hpp"
 
 namespace pg
 {
@@ -26,7 +27,8 @@ namespace pg
 			resourceCache( resCache ),
 			ecsSystem( ecsSys ),
 			renderer( rend ),
-			returnState( STATE_MENU )
+			returnState( STATE_MENU ),
+			physic( ecsSys )
 		{}
 
 		void OnStart() override;
@@ -38,6 +40,7 @@ namespace pg
 		ecs::SystemBase& ecsSystem;
 		std::vector<std::shared_ptr<ecs::Entity>> entities;
 		Renderer& renderer;
+		Physic physic;
 		uint8_t returnState;
 
 		void checkEvents();

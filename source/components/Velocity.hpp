@@ -19,12 +19,8 @@ namespace pg
 	struct VelocityComponent final :
 		public sf::Vector2f
 	{
-		// Pending Force is added in physic update to velocity.
-		sf::Vector2f pendingForce;
-
 		VelocityComponent( const sf::Vector2f& vec = sf::Vector2f() ) :
-			sf::Vector2f( vec ),
-			pendingForce( 0.0f, 0.0f )
+			sf::Vector2f( vec )
 		{}
 	};
 }

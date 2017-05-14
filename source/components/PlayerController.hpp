@@ -16,6 +16,7 @@ namespace pg
 	struct movementKey_t
 	{
 		sf::Keyboard::Key key;
+		// TODO: Change to float.
 		sf::Vector2f force;
 
 		movementKey_t( sf::Keyboard::Key k = sf::Keyboard::Key::Unknown, const sf::Vector2f& f = sf::Vector2f() ) :

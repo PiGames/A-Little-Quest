@@ -7,6 +7,7 @@ namespace pg
 		auto playerController = this->AddComponent<PlayerControllerComponent>();
 		auto position = this->AddComponent<PositionComponent>();
 		auto velocity = this->AddComponent<VelocityComponent>();
+		auto collider = this->AddComponent<ColliderComponent>();
 		auto tag = this->AddComponent<TagComponent>();
 
 		playerController->left = movementKey_t( sf::Keyboard::A, { -100.0f, 0.0f } );
@@ -27,18 +28,18 @@ namespace pg
 		auto drawable = this->GetComponent<DrawableComponent>();
 
 		if ( sf::Keyboard::isKeyPressed( playerController->left.key ) )
-			playerController->pendingForce += playerController->left.force;
+			playerController->pendingForce.x = playerController->left.force.x;
 		if ( sf::Keyboard::isKeyPressed( playerController->right.key ) )
-			playerController->pendingForce += playerController->right.force;
+			playerController->pendingForce.x = playerController->right.force.x;
 		if ( sf::Keyboard::isKeyPressed( playerController->jump.key ) && !playerController->lockJump )
 		{
-			playerController->pendingForce += playerController->jump.force;
+			playerController->pendingForce.y = playerController->jump.force.y;
 			playerController->lockJump = true;
 		}
 
-		velocity->pendingForce += playerController->pendingForce;
+		*velocity += playerController->pendingForce;
+		
 		playerController->pendingForce = sf::Vector2f();
-
 		if ( drawable )
 			drawable->sprites[0].setPosition( *position );
 	}

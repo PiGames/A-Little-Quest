@@ -4,8 +4,10 @@
 #include "components/PlayerController.hpp"
 #include "components/Position.hpp"
 #include "components/Velocity.hpp"
+#include "components/Collider.hpp"
 #include "components/Tag.hpp"
 #include "components/Drawable.hpp"
+#include "logger/Logger.hpp"
 
 namespace pg
 {
